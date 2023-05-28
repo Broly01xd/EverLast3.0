@@ -17,14 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
 
-      themeMode: ThemeMode.light,
-      theme: ThemeData(
-          primarySwatch:Colors.purple,
-          fontFamily: GoogleFonts.lato().fontFamily,
-          primaryTextTheme:GoogleFonts.latoTextTheme()),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-      ),
+
       debugShowCheckedModeBanner: false,
       initialRoute: "/home",
       routes:{
@@ -32,11 +25,11 @@ class MyApp extends StatelessWidget {
         "/":(context) => loginpage(),
 
         MyRoutes.homeRoute:(context) => HomePage(),
-        MyRoutes.loginRoute:(context) => TodayPage(),
+        MyRoutes.todayRoute:(context) => TodayPage(),
         MyRoutes.historyRoute:(context) => HistoryPage(),
-        MyRoutes.loginRoute:(context) => AddPage(),
-        MyRoutes.loginRoute:(context) => TomPage(),
-        MyRoutes.loginRoute:(context) => ProfilePage()
+        MyRoutes.addRoute:(context) => AddPage(),
+        MyRoutes.tomRoute:(context) => TomPage(),
+        MyRoutes.profileRoute:(context) => ProfilePage()
       },
     );
   }
