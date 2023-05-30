@@ -38,6 +38,7 @@ dependencies:
   flutter_date_pickers: ^0.4.2
   flutter_date_picker_timeline: ^0.3.3
   date_picker_timeline: ^1.2.3
+  pinput: ^2.2.31
   flutter:
     sdk: flutter
 

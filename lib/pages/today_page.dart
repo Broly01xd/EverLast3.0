@@ -72,10 +72,24 @@ class TodayPage extends StatelessWidget {
                   ),
                   // Calendar
                   DatePicker(
+
                     DateTime.now(),
                     onDateChange: (date) {
                       // Handle date selection
                     },
+                    selectedTextColor: Colors.black,
+                    selectionColor: Colors.orange,
+                    deactivatedColor: Colors.grey,
+                    dayTextStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    dateTextStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    monthTextStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+
                   ),
                 ],
               ),
