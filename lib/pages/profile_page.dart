@@ -1,7 +1,8 @@
 import 'package:everlast/pages/components/profile_menu.dart';
 import 'package:everlast/pages/components/profile_pic.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 class ProfilePage extends StatelessWidget {
   @override
