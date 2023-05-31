@@ -11,9 +11,8 @@ class ErrorPage extends StatelessWidget {
         children: [
           Image.asset(
             "rout/images/404_errorbird.png",
-            // "rout/images/error_404.png",
-            width: 350,
-            height: 350,
+            width: 260,
+            height: 250,
           ),
           const SizedBox(
             height: 20,
