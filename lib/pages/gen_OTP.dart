@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class Genotp extends StatefulWidget {
   const Genotp({super.key});
 
@@ -31,8 +30,8 @@ class _GenotpState extends State<Genotp> {
             children: [
               Image.asset(
                 "rout/images/OTP1.png",
-                width: 260,
-                height: 260,
+                width: 150,
+                height: 160,
               ),
               const SizedBox(
                 height: 10,
@@ -96,12 +95,12 @@ class _GenotpState extends State<Genotp> {
                     ),
                     const Expanded(
                         child: TextField(
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Phone",
-                          ),
-                        ))
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Phone",
+                      ),
+                    ))
                   ],
                 ),
               ),
