@@ -30,7 +30,7 @@ class MyRoutes {
       case '/enterotp':
         return MaterialPageRoute(builder: (context) => const OtpPage());
       case '/history':
-        return MaterialPageRoute(builder: (context) => const HistoryPage());
+        return MaterialPageRoute(builder: (context) => HistoryPage());
       case '/add':
         return MaterialPageRoute(builder: (context) => const AddPage());
       case 'profile':

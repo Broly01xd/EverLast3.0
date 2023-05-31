@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class EventHistoryPage extends StatelessWidget {
+class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get the current date
