@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-class HistoryPage extends StatelessWidget {
-  const HistoryPage({super.key});
-
+class EventHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    // Get the current date
+    DateTime currentDate = DateTime.now();
 
     // List of past events (replace this with your own data source)
     List<Event> pastEvents = [
@@ -31,36 +30,37 @@ class HistoryPage extends StatelessWidget {
         pastEvents.where((event) => event.date.isBefore(currentDate)).toList();
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Event History"),
-      // ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 1),
-        width: double.infinity,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Colors.deepPurple,
-          Colors.purple,
-          Colors.purpleAccent
-        ])),
-        child: ListView.builder(
-          itemCount: filteredEvents.length,
-          itemBuilder: (BuildContext context, int index) {
-            Event event = filteredEvents[index];
-            return ListTile(
-              title: Text(
-                event.name,
-                selectionColor: Colors.white,
-              ),
-              subtitle: Text("Date: ${event.date.toString().substring(0, 10)}"),
-              onTap: () {
-                // Handle tapping on a past event, e.g., navigate to event details screen
-                // You can add your own implementation here
-              },
-            );
-          },
-        ),
+      appBar: AppBar(
+        title: Text("Event History"),
+      ),
+      body: ListView.builder(
+        itemCount: filteredEvents.length,
+        itemBuilder: (BuildContext context, int index) {
+          Event event = filteredEvents[index];
+          return ListTile(
+            title: Text(event.name),
+            subtitle: Text("Date: ${event.date.toString().substring(0, 10)}"),
+            onTap: () {
+              // Handle tapping on a past event, e.g., navigate to event details screen
+              // You can add your own implementation here
+            },
+          );
+        },
       ),
     );
   }
+}
+
+class Event {
+  final String name;
+  final DateTime date;
+  final String location;
+  final String description;
+
+  Event({
+    required this.name,
+    required this.date,
+    required this.location,
+    required this.description,
+  });
 }
