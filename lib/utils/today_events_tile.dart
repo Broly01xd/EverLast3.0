@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class EventsTile extends StatelessWidget {
-  final IconData icon;
+  final String imageAsset;
   final String eventName;
   final String eventWho;
 
   const EventsTile({
     Key? key,
-    required this.icon,
+    required this.imageAsset,
     required this.eventName,
     required this.eventWho,
   }) : super(key: key);
@@ -17,7 +17,7 @@ class EventsTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -30,28 +30,30 @@ class EventsTile extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
-                    padding: EdgeInsets.all(16),
-                    child: Icon(
-                      icon,
-                      color: Colors.white,
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(imageAsset),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    color: Colors.orange,
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       eventName,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
                     Text(
                       eventWho,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                         color: Colors.grey,
@@ -64,11 +66,11 @@ class EventsTile extends StatelessWidget {
             PopupMenuButton<String>(
               itemBuilder: (context) {
                 return [
-                  PopupMenuItem<String>(
+                  const PopupMenuItem<String>(
                     value: 'delete',
                     child: Text('Delete'),
                   ),
-                  PopupMenuItem<String>(
+                  const PopupMenuItem<String>(
                     value: 'update',
                     child: Text('Update'),
                   ),
@@ -81,7 +83,7 @@ class EventsTile extends StatelessWidget {
                   // Perform update operation
                 }
               },
-              child: Icon(Icons.more_horiz),
+              child: const Icon(Icons.more_horiz),
             ),
           ],
         ),
@@ -94,21 +96,21 @@ class EventsTile extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirm Delete'),
-          content: Text('Are you sure you want to delete this item?'),
+          title: const Text('Confirm Delete'),
+          content: const Text('Are you sure you want to delete this item?'),
           actions: [
             TextButton(
               onPressed: () {
                 // Perform delete operation
                 Navigator.of(context).pop();
               },
-              child: Text('Delete'),
+              child: const Text('Delete'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
           ],
         );

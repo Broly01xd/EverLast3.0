@@ -19,7 +19,7 @@ class ProfilePic extends StatelessWidget {
 
         children: [
 
-          CircleAvatar(backgroundImage: NetworkImage("https://i.ibb.co/bvHR444/IMG-2925.jpg"),
+          const CircleAvatar(backgroundImage: NetworkImage("https://i.ibb.co/bvHR444/IMG-2925.jpg"),
           ),
           Positioned(
 
@@ -30,7 +30,7 @@ class ProfilePic extends StatelessWidget {
               width: 46,
               child: TextButton(
 
-                style: TextButton.styleFrom(backgroundColor: Colors.grey[200],side: BorderSide(color: Colors.white),padding: EdgeInsets.zero,shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) ),
+                style: TextButton.styleFrom(backgroundColor: Colors.grey[200],side: const BorderSide(color: Colors.white),padding: EdgeInsets.zero,shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)) ),
 
                 onPressed: (){},
                 child: SvgPicture.asset("rout/images/icons8-camera (1).svg",
