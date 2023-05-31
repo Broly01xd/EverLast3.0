@@ -47,8 +47,11 @@ class HistoryPage extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             Event event = filteredEvents[index];
             return ListTile(
-              title: Text(event.name,style: TextStyle(color:Colors.white)),
-              subtitle: Text("Date: ${event.date.toString().substring(0, 10)}",style: TextStyle(color:Colors.white)),
+              title: Text(
+                event.name,
+                selectionColor: Colors.white,
+              ),
+              subtitle: Text("Date: ${event.date.toString().substring(0, 10)}"),
               onTap: () {
                 // Handle tapping on a past event, e.g., navigate to event details screen
                 // You can add your own implementation here

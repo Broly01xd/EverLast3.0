@@ -47,7 +47,7 @@ class ErrorPage extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                "Go To Home",
+                "Back To Home",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
               ),
             ),
