@@ -59,7 +59,7 @@ class _GenotpState extends State<Genotp> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     SizedBox(
@@ -67,19 +67,19 @@ class _GenotpState extends State<Genotp> {
                       child: TextField(
                         controller: countrycode,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                         ),
                       ),
                     ),
-                    Text(
+                    const Text(
                       "|",
                       style: TextStyle(fontSize: 33, color: Colors.grey),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Expanded(
+                    const Expanded(
                         child: TextField(
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
@@ -101,7 +101,7 @@ class _GenotpState extends State<Genotp> {
                     Navigator.pushNamed(context, "/enterotp");
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(192, 52, 217, 1),
+                    backgroundColor: const Color.fromRGBO(192, 52, 217, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

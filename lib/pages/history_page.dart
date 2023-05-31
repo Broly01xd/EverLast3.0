@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class HistoryPage extends StatelessWidget {
+  const HistoryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    // Get the current date
-    DateTime currentDate = DateTime.now();
+    return  Scaffold(
 
     // List of past events (replace this with your own data source)
     List<Event> pastEvents = [
@@ -62,18 +63,4 @@ class HistoryPage extends StatelessWidget {
       ),
     );
   }
-}
-
-class Event {
-  final String name;
-  final DateTime date;
-  final String location;
-  final String description;
-
-  Event({
-    required this.name,
-    required this.date,
-    required this.location,
-    required this.description,
-  });
 }

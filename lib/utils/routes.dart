@@ -24,23 +24,23 @@ class MyRoutes {
     final args = settings.arguments;
     switch (settings.name) {
       case '/home':
-        return MaterialPageRoute(builder: (context) => HomePage());
+        return MaterialPageRoute(builder: (context) => const HomePage());
       case '/genotp':
-        return MaterialPageRoute(builder: (context) => Genotp());
+        return MaterialPageRoute(builder: (context) => const Genotp());
       case '/enterotp':
-        return MaterialPageRoute(builder: (context) => OtpPage());
+        return MaterialPageRoute(builder: (context) => const OtpPage());
       case '/history':
-        return MaterialPageRoute(builder: (context) => HistoryPage());
+        return MaterialPageRoute(builder: (context) => const HistoryPage());
       case '/add':
-        return MaterialPageRoute(builder: (context) => AddPage());
+        return MaterialPageRoute(builder: (context) => const AddPage());
       case 'profile':
-        return MaterialPageRoute(builder: (context) => ProfilePage());
+        return MaterialPageRoute(builder: (context) => const ProfilePage());
       case 'today':
-        return MaterialPageRoute(builder: (context) => TodayPage());
+        return MaterialPageRoute(builder: (context) => const TodayPage());
       case 'tomorrow':
-        return MaterialPageRoute(builder: (context) => TomPage());
+        return MaterialPageRoute(builder: (context) => const TomPage());
       default:
-        return MaterialPageRoute(builder: (context) => ErrorPage());
+        return MaterialPageRoute(builder: (context) => const ErrorPage());
     }
   }
 }

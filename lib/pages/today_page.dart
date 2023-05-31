@@ -1,11 +1,12 @@
-import 'package:everlast/pages/profile_page.dart';
-import 'package:everlast/utils/today_events_tile.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_date_picker_timeline/flutter_date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:everlast/pages/profile_page.dart';
+import 'package:flutter/material.dart';
 
+import '../utils/today_events_tile.dart';
 
 class TodayPage extends StatelessWidget {
+  const TodayPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +14,6 @@ class TodayPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // Greetings row
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Column(
@@ -24,8 +24,7 @@ class TodayPage extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Hi ----user
-                          Text(
+                          const Text(
                             'Hi, Hilal!',
                             style: TextStyle(
                               color: Colors.white,
@@ -33,31 +32,27 @@ class TodayPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           Text(
-                            '23 jan,2021',
+                            '23 Jan, 2021',
                             style: TextStyle(color: Colors.purple[100]),
                           ),
                         ],
                       ),
-                      // Notification
                       Container(
-                        padding: EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(12),
                         child: GestureDetector(
                           onTap: () {
-                            // Navigate to the profile page
-                            // You can use a navigation library like Navigator to navigate to the desired page
-                            // For example:
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ProfilePage(),
+                                builder: (context) => const ProfilePage(),
                               ),
                             );
                           },
-                          child: CircleAvatar(
+                          child: const CircleAvatar(
                             backgroundImage: NetworkImage(
                               "https://i.ibb.co/bvHR444/IMG-2925.jpg",
                             ),
@@ -67,12 +62,10 @@ class TodayPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
-                  // Calendar
                   DatePicker(
-
                     DateTime.now(),
                     onDateChange: (date) {
                       // Handle date selection
@@ -80,41 +73,38 @@ class TodayPage extends StatelessWidget {
                     selectedTextColor: Colors.black,
                     selectionColor: Colors.orange,
                     deactivatedColor: Colors.grey,
-                    dayTextStyle: TextStyle(
+                    dayTextStyle: const TextStyle(
                       color: Colors.white,
                     ),
-                    dateTextStyle: TextStyle(
+                    dateTextStyle: const TextStyle(
                       color: Colors.white,
                     ),
-                    monthTextStyle: TextStyle(
+                    monthTextStyle: const TextStyle(
                       color: Colors.white,
                     ),
-
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
-            // Today events begin
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
                   ),
                 ),
-                padding: EdgeInsets.all(25),
+                padding: const EdgeInsets.all(25),
                 child: Center(
                   child: Column(
                     children: [
-                      // Events heading
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Text(
                             "Today's Events",
                             style: TextStyle(
@@ -125,37 +115,43 @@ class TodayPage extends StatelessWidget {
                           Icon(Icons.more_horiz),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      // List view of events
                       Expanded(
                         child: ListView(
-                          children: [
+                          children: const [
                             EventsTile(
-                              icon: Icons.cake,
+                              imageAsset: 'rout/images/750997891.jpg',
                               eventName: 'Birthday Party',
                               eventWho: 'Lua Dipa',
                             ),
                             EventsTile(
-                              icon: Icons.man,
+                              imageAsset:
+                                  'rout/images/Prime-Minister-Narendra-Modi---PTI-_1685268448404.avif',
                               eventName: 'Political speech',
                               eventWho: 'Morendra Nodi',
                             ),
                             EventsTile(
-                              icon: Icons.book,
+                              imageAsset: 'rout/images/seminar.jpg',
                               eventName: 'Seminar',
                               eventWho: 'Salmon Boi',
                             ),
                             EventsTile(
-                              icon: Icons.business,
+                              imageAsset: 'rout/images/microsoft-logo.webp',
                               eventName: 'Company meetings',
                               eventWho: 'Microsoft',
                             ),
                             EventsTile(
-                              icon: Icons.party_mode_sharp,
+                              imageAsset: 'rout/images/unnamed.png',
                               eventName: 'Company party',
                               eventWho: 'GuluGulu',
+                            ),
+                            EventsTile(
+                              imageAsset:
+                                  'rout/images/Wedding-cost-in-India-Explained-Cover-Image.jpg',
+                              eventName: 'Wedding',
+                              eventWho: 'Unmarried Person',
                             ),
                           ],
                         ),

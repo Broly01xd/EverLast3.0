@@ -28,11 +28,11 @@ class _EmoticonFaceState extends State<EmoticonFace> {
           color: isSelected ? Colors.white24 : Colors.purple[600],
           borderRadius: BorderRadius.circular(12),
         ),
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Center(
           child: Text(
             widget.emoticonFace,
-            style: TextStyle(fontSize: 28),
+            style: const TextStyle(fontSize: 28),
           ),
         ),
       ),
