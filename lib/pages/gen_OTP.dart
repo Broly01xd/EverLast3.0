@@ -51,20 +51,6 @@ class _GenotpState extends State<Genotp> {
               const SizedBox(
                 height: 50,
               ),
-              // IntlPhoneField(
-              //   decoration: const InputDecoration(
-              //     labelText: 'Phone Number',
-              //     border: OutlineInputBorder(
-              //       borderSide: BorderSide(),
-              //     ),
-              //   ),
-              //   onChanged: (phone) {
-              //     print(phone.completeNumber);
-              //   },
-              //   onCountryChanged: (country) {
-              //     print('Country changed to: ' + country.name);
-              //   },
-              // ),
               Container(
                 height: 55,
                 decoration: BoxDecoration(
