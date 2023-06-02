@@ -16,38 +16,40 @@ class ProfilePage extends StatelessWidget {
           ),
           centerTitle: true,
         ),
-        body: Column(
-          children: [
-            Center(child: ProfilePic()),
-            SizedBox(
-              height: 20,
-            ),
-            ProfileMenu(
-              icon: "rout/images/user-03-svgrepo-com.svg",
-              text: "My Account",
-              press: (){},
-            ),
-            ProfileMenu(
-              icon: "rout/images/notification-svgrepo-com.svg",
-              text: "Notifications",
-              press: (){},
-            ),
-            ProfileMenu(
-              icon: "rout/images/settings-svgrepo-com.svg",
-              text: "Settings",
-              press: (){},
-            ),
-            ProfileMenu(
-              icon: "rout/images/help-svgrepo-com.svg",
-              text: "Help",
-              press: (){},
-            ),
-            ProfileMenu(
-              icon: "rout/images/log-out-svgrepo-com.svg",
-              text: "Log Out",
-              press: (){},
-            ),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(child: ProfilePic()),
+              SizedBox(
+                height: 20,
+              ),
+              ProfileMenu(
+                icon: "rout/images/user-03-svgrepo-com.svg",
+                text: "My Account",
+                press: (){},
+              ),
+              ProfileMenu(
+                icon: "rout/images/notification-svgrepo-com.svg",
+                text: "Notifications",
+                press: (){},
+              ),
+              ProfileMenu(
+                icon: "rout/images/settings-svgrepo-com.svg",
+                text: "Settings",
+                press: (){},
+              ),
+              ProfileMenu(
+                icon: "rout/images/help-svgrepo-com.svg",
+                text: "Help",
+                press: (){},
+              ),
+              ProfileMenu(
+                icon: "rout/images/log-out-svgrepo-com.svg",
+                text: "Log Out",
+                press: (){},
+              ),
+            ],
+          ),
         ));
   }
 }

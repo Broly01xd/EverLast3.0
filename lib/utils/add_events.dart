@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class EventsTile extends StatelessWidget {
   final IconData icon;
   final String eventName;
+  final String eventDate;
   final String eventWho;
 
   const EventsTile({
     Key? key,
     required this.icon,
     required this.eventName,
+    required this.eventDate,
     required this.eventWho,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(9),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(80),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,9 +31,9 @@ class EventsTile extends StatelessWidget {
             Row(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(19),
                   child: Container(
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.all(4),
                     child: Icon(
                       icon,
                       color: Colors.white,
@@ -38,18 +41,23 @@ class EventsTile extends StatelessWidget {
                     color: Color.fromARGB(255, 137, 35, 148),
                   ),
                 ),
-                SizedBox(width: 12),
+                SizedBox(width: 15),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       eventName,
                       style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 15, height: 4),
+                    ),
+                    Text(
+                      eventDate,
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 14,
+                        color: Colors.black,
                       ),
                     ),
-                    
                     Text(
                       eventWho,
                       style: TextStyle(
@@ -60,30 +68,42 @@ class EventsTile extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(width: 5),
               ],
             ),
-            PopupMenuButton<String>(
-              itemBuilder: (context) {
-                return [
-                  PopupMenuItem<String>(
-                    value: 'delete',
-                    child: Text('Delete'),
-                  ),
-                  PopupMenuItem<String>(
-                    value: 'update',
-                    child: Text('Update'),
-                  ),
-                ];
-              },
-              onSelected: (value) {
-                if (value == 'delete') {
-                  _showDeleteConfirmationDialog(context);
-                } else if (value == 'update') {
-                  // Perform update operation
-                }
-              },
-              child: Icon(Icons.more_horiz),
-            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.share_outlined),
+                  onPressed: () {
+                    Share.share(
+                        "https://play.google.com/store/apps/details?id=com.instructivetech.testapp");
+                  },
+                ),
+                PopupMenuButton<String>(
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem<String>(
+                        value: 'delete',
+                        child: Text('Delete'),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'update',
+                        child: Text('Update'),
+                      ),
+                    ];
+                  },
+                  onSelected: (value) {
+                    if (value == 'delete') {
+                      _showDeleteConfirmationDialog(context);
+                    } else if (value == 'update') {
+                      // Perform update operation
+                    }
+                  },
+                  child: Icon(Icons.more_horiz),
+                ),
+              ],
+            )
           ],
         ),
       ),

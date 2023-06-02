@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class EventsTile extends StatelessWidget {
   final IconData icon;
   final String eventName;
+  final String eventDate;
   final String eventWho;
 
   const EventsTile({
     Key? key,
     required this.icon,
     required this.eventName,
+    required this.eventDate,
     required this.eventWho,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.only(bottom: 10.0 , top:10.0),
       child: Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(80),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,7 +52,14 @@ class EventsTile extends StatelessWidget {
                         fontSize: 18,
                       ),
                     ),
-                    
+                    Text(
+                      eventDate,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                    ),
                     Text(
                       eventWho,
                       style: TextStyle(
@@ -62,6 +72,7 @@ class EventsTile extends StatelessWidget {
                 ),
               ],
             ),
+           
             PopupMenuButton<String>(
               itemBuilder: (context) {
                 return [
@@ -78,8 +89,7 @@ class EventsTile extends StatelessWidget {
               onSelected: (value) {
                 if (value == 'delete') {
                   _showDeleteConfirmationDialog(context);
-                } else if (value == 'update') {
-                  // Perform update operation
+                } else if (value == 'update') {                 // Perform update operation
                 }
               },
               child: Icon(Icons.more_horiz),

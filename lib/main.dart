@@ -8,7 +8,6 @@ import 'package:everlast/utils/routes.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:everlast/pages/history_page.dart';
 import 'package:everlast/pages/otp_page.dart';
-
 import 'pages/home_page.dart';
 
 void main() {
@@ -19,8 +18,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.light,
+      theme: ThemeData(
+          primarySwatch: Colors.purple,
+          fontFamily: GoogleFonts.lato().fontFamily,
+          primaryTextTheme: GoogleFonts.latoTextTheme()),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+      ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/genotp',
+      initialRoute: '/create',
       onGenerateRoute: MyRoutes.generateRoute,
     );
   }
