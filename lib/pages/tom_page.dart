@@ -12,7 +12,7 @@ class TomPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10),
         width: double.infinity,
         color: Colors.purple,
         child: Column(
