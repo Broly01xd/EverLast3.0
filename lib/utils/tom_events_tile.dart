@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class EventsTile extends StatelessWidget {
-  final String imageAsset;
+  final IconData icon;
   final String eventName;
+  final String eventDate;
   final String eventWho;
 
   const EventsTile({
     Key? key,
-    required this.imageAsset,
+    required this.icon,
     required this.eventName,
+    required this.eventDate,
     required this.eventWho,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.only(bottom: 10.0 , top:10.0),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(80),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,31 +33,36 @@ class EventsTile extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(imageAsset),
-                        fit: BoxFit.cover,
-                      ),
+                    padding: EdgeInsets.all(16),
+                    child: Icon(
+                      icon,
+                      color: Colors.white,
                     ),
                     color: Color.fromARGB(255, 137, 35, 148),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       eventName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
                     Text(
+                      eventDate,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
                       eventWho,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                         color: Colors.grey,
@@ -64,14 +72,15 @@ class EventsTile extends StatelessWidget {
                 ),
               ],
             ),
+           
             PopupMenuButton<String>(
               itemBuilder: (context) {
                 return [
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: 'delete',
                     child: Text('Delete'),
                   ),
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: 'update',
                     child: Text('Update'),
                   ),
@@ -80,11 +89,10 @@ class EventsTile extends StatelessWidget {
               onSelected: (value) {
                 if (value == 'delete') {
                   _showDeleteConfirmationDialog(context);
-                } else if (value == 'update') {
-                  // Perform update operation
+                } else if (value == 'update') {                 // Perform update operation
                 }
               },
-              child: const Icon(Icons.more_horiz),
+              child: Icon(Icons.more_horiz),
             ),
           ],
         ),
@@ -97,21 +105,21 @@ class EventsTile extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm Delete'),
-          content: const Text('Are you sure you want to delete this item?'),
+          title: Text('Confirm Delete'),
+          content: Text('Are you sure you want to delete this item?'),
           actions: [
             TextButton(
               onPressed: () {
                 // Perform delete operation
                 Navigator.of(context).pop();
               },
-              child: const Text('Delete'),
+              child: Text('Delete'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text('Cancel'),
             ),
           ],
         );

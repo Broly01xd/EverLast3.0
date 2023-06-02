@@ -9,6 +9,7 @@ import '../pages/home_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/today_page.dart';
 import '../pages/tom_page.dart';
+import '../pages/create_event.dart';
 
 class MyRoutes {
   static String genotpRoute = "/genotp";
@@ -19,6 +20,7 @@ class MyRoutes {
   static String todayRoute = "/today";
   static String tomRoute = "/tomorrow";
   static String entrotpRoute = "/enterotp";
+  static String createventRoute = "/create";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -32,13 +34,13 @@ class MyRoutes {
       case '/history':
         return MaterialPageRoute(builder: (context) => HistoryPage());
       case '/add':
-        return MaterialPageRoute(builder: (context) => AddPage());
+        return MaterialPageRoute(builder: (context) => const AddPage());
       case 'profile':
-        return MaterialPageRoute(builder: (context) => ProfilePage());
+        return MaterialPageRoute(builder: (context) => const ProfilePage());
       case 'today':
-        return MaterialPageRoute(builder: (context) => TodayPage());
+        return MaterialPageRoute(builder: (context) => const TodayPage());
       case 'tomorrow':
-        return MaterialPageRoute(builder: (context) => TomPage());
+        return MaterialPageRoute(builder: (context) => const TomPage());
       default:
         return MaterialPageRoute(builder: (context) => ErrorPage());
     }
