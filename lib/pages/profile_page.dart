@@ -3,14 +3,15 @@ import 'package:everlast/pages/components/profile_pic.dart';
 
 import 'package:flutter/material.dart';
 
-
 class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple,
-          title: Text(
+          title: const Text(
             'Profile',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
@@ -26,31 +27,30 @@ class ProfilePage extends StatelessWidget {
               ProfileMenu(
                 icon: "rout/images/user-03-svgrepo-com.svg",
                 text: "My Account",
-                press: (){},
+                press: () {},
               ),
               ProfileMenu(
                 icon: "rout/images/notification-svgrepo-com.svg",
                 text: "Notifications",
-                press: (){},
+                press: () {},
               ),
               ProfileMenu(
                 icon: "rout/images/settings-svgrepo-com.svg",
                 text: "Settings",
-                press: (){},
+                press: () {},
               ),
               ProfileMenu(
                 icon: "rout/images/help-svgrepo-com.svg",
                 text: "Help",
-                press: (){},
+                press: () {},
               ),
               ProfileMenu(
                 icon: "rout/images/log-out-svgrepo-com.svg",
                 text: "Log Out",
-                press: (){},
+                press: () {},
               ),
             ],
           ),
         ));
   }
 }
-

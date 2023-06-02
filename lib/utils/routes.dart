@@ -26,11 +26,11 @@ class MyRoutes {
     final args = settings.arguments;
     switch (settings.name) {
       case '/home':
-        return MaterialPageRoute(builder: (context) => HomePage());
+        return MaterialPageRoute(builder: (context) => const HomePage());
       case '/genotp':
-        return MaterialPageRoute(builder: (context) => Genotp());
+        return MaterialPageRoute(builder: (context) => const Genotp());
       case '/enterotp':
-        return MaterialPageRoute(builder: (context) => OtpPage());
+        return MaterialPageRoute(builder: (context) => const OtpPage());
       case '/history':
         return MaterialPageRoute(builder: (context) => HistoryPage());
       case '/add':
@@ -44,7 +44,7 @@ class MyRoutes {
       case '/create':
         return MaterialPageRoute(builder: (context) => create_event());
       default:
-        return MaterialPageRoute(builder: (context) => ErrorPage());
+        return MaterialPageRoute(builder: (context) => const ErrorPage());
     }
   }
 }

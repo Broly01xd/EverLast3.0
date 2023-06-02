@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class Genotp extends StatefulWidget {
   const Genotp({super.key});
 
@@ -31,8 +30,8 @@ class _GenotpState extends State<Genotp> {
             children: [
               Image.asset(
                 "rout/images/OTP1.png",
-                width: 260,
-                height: 260,
+                width: 150,
+                height: 160,
               ),
               const SizedBox(
                 height: 10,
@@ -52,20 +51,6 @@ class _GenotpState extends State<Genotp> {
               const SizedBox(
                 height: 50,
               ),
-              // IntlPhoneField(
-              //   decoration: const InputDecoration(
-              //     labelText: 'Phone Number',
-              //     border: OutlineInputBorder(
-              //       borderSide: BorderSide(),
-              //     ),
-              //   ),
-              //   onChanged: (phone) {
-              //     print(phone.completeNumber);
-              //   },
-              //   onCountryChanged: (country) {
-              //     print('Country changed to: ' + country.name);
-              //   },
-              // ),
               Container(
                 height: 55,
                 decoration: BoxDecoration(
@@ -74,7 +59,7 @@ class _GenotpState extends State<Genotp> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     SizedBox(
@@ -82,26 +67,26 @@ class _GenotpState extends State<Genotp> {
                       child: TextField(
                         controller: countrycode,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                         ),
                       ),
                     ),
-                    Text(
+                    const Text(
                       "|",
                       style: TextStyle(fontSize: 33, color: Colors.grey),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Expanded(
+                    const Expanded(
                         child: TextField(
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Phone",
-                          ),
-                        ))
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Phone",
+                      ),
+                    ))
                   ],
                 ),
               ),
@@ -116,7 +101,7 @@ class _GenotpState extends State<Genotp> {
                     Navigator.pushNamed(context, "/enterotp");
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(192, 52, 217, 1),
+                    backgroundColor: const Color.fromRGBO(192, 52, 217, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

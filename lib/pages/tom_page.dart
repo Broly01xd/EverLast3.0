@@ -10,34 +10,38 @@ class TomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
       body: Container(
         padding: EdgeInsets.only(top: 10),
         width: double.infinity,
-       color: Colors.purple,
+        color: Colors.purple,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 25,),
+            SizedBox(
+              height: 25,
+            ),
             Row(
               children: <Widget>[
                 Text(
                   "Upcoming ",
-                  style:TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600),
-                    ),
-                 Text(
-                   "Events",
-                    style:TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
-                        fontWeight: FontWeight.w600),
-                        ),
+                      fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  "Events",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600),
+                ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -64,71 +68,59 @@ class TomPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             Expanded(
-              
-  child: ClipRRect(
-    borderRadius:BorderRadius.only(topRight: Radius.circular(85)),
-    child: Container(
-      
-      color: Colors.white,
-      
-       child: Column(
-         children: <Widget>[
-       
-    
-           Expanded(
-             
-                         child: ListView(
-                           children: const[
-                             EventsTile(
-                               icon: Icons.cake,
-                               eventName: 'Birthday Party',
-                               eventWho: 'Lua Dipa',
-                               eventDate:'15/2/2023'
-                             ),
-                             EventsTile(
-                               icon: Icons.man,
-                               eventName: 'Political speech',
-                               eventDate:'15/2/2023',
-                               eventWho: 'Morendra Nodi',
-                               
-                             ),
-                             EventsTile(
-                               icon: Icons.book,
-                               eventName: 'Seminar',
-                               eventDate:'15/2/2023',
-                               eventWho: 'Salmon Boi',
-                               
-                             ),
-                             EventsTile(
-                               icon: Icons.business,
-                               eventName: 'Company meetings',
-                               eventDate:'15/2/2023',
-                               eventWho: 'Microsoft',
-                               
-                             ),
-                             EventsTile(
-                               icon: Icons.party_mode_sharp,
-                               eventName: 'Company party',
-                               eventDate:'15/2/2023',
-                               eventWho: 'GuluGulu',
-                               
-                             ),
-                           ],
-                         ),
-                       ),
-                       
-         ],
-       ),
-    ),
-  ),
- )
-         ],
-     ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(topRight: Radius.circular(85)),
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: ListView(
+                          children: const [
+                            EventsTile(
+                                icon: Icons.cake,
+                                eventName: 'Birthday Party',
+                                eventWho: 'Lua Dipa',
+                                eventDate: '15/2/2023'),
+                            EventsTile(
+                              icon: Icons.man,
+                              eventName: 'Political speech',
+                              eventDate: '15/2/2023',
+                              eventWho: 'Morendra Nodi',
+                            ),
+                            EventsTile(
+                              icon: Icons.book,
+                              eventName: 'Seminar',
+                              eventDate: '15/2/2023',
+                              eventWho: 'Salmon Boi',
+                            ),
+                            EventsTile(
+                              icon: Icons.business,
+                              eventName: 'Company meetings',
+                              eventDate: '15/2/2023',
+                              eventWho: 'Microsoft',
+                            ),
+                            EventsTile(
+                              icon: Icons.party_mode_sharp,
+                              eventName: 'Company party',
+                              eventDate: '15/2/2023',
+                              eventWho: 'GuluGulu',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
-     );
+    );
   }
-    }
-
-
+}
