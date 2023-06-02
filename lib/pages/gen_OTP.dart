@@ -3,20 +3,13 @@ import 'package:flutter/material.dart';
 class Genotp extends StatefulWidget {
   const Genotp({super.key});
 
-  // final String title;
-
   @override
   State<Genotp> createState() => _GenotpState();
 }
 
 class _GenotpState extends State<Genotp> {
-  TextEditingController countrycode = TextEditingController();
-
-  @override
-  void initState() {
-    countrycode.text = "+91";
-    super.initState();
-  }
+  TextEditingController mobile = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +23,8 @@ class _GenotpState extends State<Genotp> {
             children: [
               Image.asset(
                 "rout/images/OTP1.png",
-                width: 150,
-                height: 160,
+                width: 300,
+                height: 300,
               ),
               const SizedBox(
                 height: 10,
@@ -51,47 +44,56 @@ class _GenotpState extends State<Genotp> {
               const SizedBox(
                 height: 50,
               ),
-              Container(
-                height: 55,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              Form(
+                key: formKey,
+                child: Column(
                   children: [
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      width: 40,
-                      child: TextField(
-                        controller: countrycode,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Material(
+                        child: TextFormField(
+                          onChanged: (value) {
+                            formKey.currentState?.validate();
+                          },
+                          controller: mobile,
+                          maxLength: 10,
+                          validator: (value) {
+                            if (mobile.text.length != 10) {
+                              return "Please Enter a Valid Phone Number";
+                            }
+                          },
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            counterText: '',
+                            labelText: "Enter Phone Number",
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1.0),
+                                borderRadius: BorderRadius.circular(24)),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10.0,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6.0),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 20.0),
+                            ),
+                            hintText: "Enter Your Moblie Number",
+                            hintStyle: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                fontFamily: 'Poppins'),
+                          ),
                         ),
                       ),
                     ),
-                    const Text(
-                      "|",
-                      style: TextStyle(fontSize: 33, color: Colors.grey),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Expanded(
-                        child: TextField(
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Phone",
-                      ),
-                    ))
+                    Align(
+                      alignment: Alignment.center,
+                    )
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 20,
               ),
               SizedBox(
                 height: 45,
