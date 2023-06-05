@@ -85,7 +85,7 @@ class _OtpPageState extends State<OtpPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/home");
+                    Navigator.pushNamed(context, "/bottomNav");
                   },
                   // child: Text("Generate OTP"),
                   style: ElevatedButton.styleFrom(
