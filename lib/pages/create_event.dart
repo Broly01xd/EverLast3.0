@@ -76,48 +76,48 @@ class CreateEvent extends StatelessWidget {
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             TextFormField(
               decoration: InputDecoration(labelText: "Name :"),
-              // validator: (value) {
-              //   if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
-              //     return "Enter Full Name";
-              //   } else {
-              //     return null;
-              //   }
-              // },
+              validator: (value) {
+                if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
+                  return "Enter Full Name";
+                } else {
+                  return null;
+                }
+              },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             TextFormField(
               decoration: InputDecoration(labelText: "Date:"),
-              // validator: (value) {
-              //   if (value!.isEmpty ||
-              //       !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(value!)) {
-              //     return "Enter  Date";
-              //   } else {
-              //     return null;
-              //   }
-              // },
+              validator: (value) {
+                if (value!.isEmpty ||
+                    !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(value!)) {
+                  return "Enter  Date";
+                } else {
+                  return null;
+                }
+              },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             TextFormField(
               decoration: InputDecoration(labelText: "Time:"),
-              // validator: (value) {
-              //   if (value!.isEmpty ||
-              //       !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(value!)) {
-              //     return "Enter Time";
-              //   } else {
-              //     return null;
-              //   }
-              // },
+              validator: (value) {
+                if (value!.isEmpty ||
+                    !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(value!)) {
+                  return "Enter Time";
+                } else {
+                  return null;
+                }
+              },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             TextFormField(
               decoration: InputDecoration(labelText: "Location :"),
-              // validator: (value) {
-              //   if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
-              //     return "Enter Location";
-              //   } else {
-              //     return null;
-              //   }
-              // },
+              validator: (value) {
+                if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
+                  return "Enter Location";
+                } else {
+                  return null;
+                }
+              },
             ),
           ],
         ),
