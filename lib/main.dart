@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
+      initialRoute: '/genotp',
       onGenerateRoute: MyRoutes.generateRoute,
     );
   }

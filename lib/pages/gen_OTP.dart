@@ -57,9 +57,15 @@ class _GenotpState extends State<Genotp> {
                           },
                           controller: mobile,
                           maxLength: 10,
-                          validator: (value) {
-                            if (mobile.text.length != 10) {
+                          validator: (mobile) {
+                            if (mobile!.isEmpty || mobile.length != 10) {
                               return "Please Enter a Valid Phone Number";
+                            } else if (!RegExp(
+                                    r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
+                                .hasMatch(mobile)) {
+                              return "Please Enter a Valid Phone Number";
+                            } else {
+                              return null;
                             }
                           },
                           keyboardType: TextInputType.number,
@@ -95,17 +101,20 @@ class _GenotpState extends State<Genotp> {
                   ],
                 ),
               ),
+              SizedBox(height: 10),
               SizedBox(
                 height: 45,
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/enterotp");
+                    if (formKey.currentState!.validate()) {
+                      Navigator.pushNamed(context, "/enterotp");
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(192, 52, 217, 1),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   child: const Text("Generate OTP"),

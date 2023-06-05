@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../pages/add.dart';
 import '../pages/error_page.dart';
-import '../pages/gen_OTP.dart';
+import '../pages/gen_otp.dart';
 import '../pages/history_page.dart';
 import '../pages/home_page.dart';
 import '../pages/profile_page.dart';
