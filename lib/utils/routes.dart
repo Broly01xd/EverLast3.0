@@ -2,14 +2,15 @@ import 'package:everlast/pages/otp_page.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/add.dart';
-import '../pages/bottom_nav_pages.dart';
-import '../pages/components/menu_pages/notification.dart';
 import '../pages/error_page.dart';
 import '../pages/gen_OTP.dart';
 import '../pages/history_page.dart';
+import '../pages/home_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/today_page.dart';
 import '../pages/tom_page.dart';
+import '../pages/create_event.dart';
+import '../pages/my_account.dart';
 
 class MyRoutes {
   static String genotpRoute = "/genotp";
@@ -20,32 +21,34 @@ class MyRoutes {
   static String todayRoute = "/today";
   static String tomRoute = "/tomorrow";
   static String entrotpRoute = "/enterotp";
-  static String notifyRoute = "/notify";
+  static String createventRoute = "/create";
+  static String MyAccountPageRoute = "/MyAccountPage";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
       case '/home':
-        return MaterialPageRoute(builder: (context) => const BotNavPage());
+        return MaterialPageRoute(builder: (context) => HomePage());
       case '/genotp':
-        return MaterialPageRoute(builder: (context) => const Genotp());
+        return MaterialPageRoute(builder: (context) => Genotp());
       case '/enterotp':
-        return MaterialPageRoute(builder: (context) => const OtpPage());
+        return MaterialPageRoute(builder: (context) => OtpPage());
       case '/history':
-        return MaterialPageRoute(builder: (context) => const HistoryPage());
+        return MaterialPageRoute(builder: (context) => HistoryPage());
       case '/add':
-        return MaterialPageRoute(builder: (context) => const AddPage());
+        return MaterialPageRoute(builder: (context) => AddPage());
       case '/profile':
-        return MaterialPageRoute(builder: (context) => const ProfilePage());
-      case 'today':
-        return MaterialPageRoute(builder: (context) => const TodayPage());
-      case 'tomorrow':
-        return MaterialPageRoute(builder: (context) => const TomPage());
-      case '/notify':
-        return MaterialPageRoute(
-            builder: (context) => const NotificationPage());
+        return MaterialPageRoute(builder: (context) => ProfilePage());
+      case '/today':
+        return MaterialPageRoute(builder: (context) => TodayPage());
+      case '/tomorrow':
+        return MaterialPageRoute(builder: (context) => TomPage());
+      case '/create':
+        return MaterialPageRoute(builder: (context) => CreateEvent());
+        case '/MyAccountPage':
+        return MaterialPageRoute(builder: (context) => MyAccountPage());
       default:
-        return MaterialPageRoute(builder: (context) => const ErrorPage());
+        return MaterialPageRoute(builder: (context) => ErrorPage());
     }
   }
 }
