@@ -6,14 +6,14 @@ import 'package:everlast/pages/tom_page.dart';
 import 'package:everlast/utils/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class BotNavPage extends StatefulWidget {
+  const BotNavPage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _BotNavPageState createState() => _BotNavPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _BotNavPageState extends State<BotNavPage> {
   var _currentIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
 

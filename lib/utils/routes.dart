@@ -2,10 +2,11 @@ import 'package:everlast/pages/otp_page.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/add.dart';
+import '../pages/bottom_nav_pages.dart';
+import '../pages/components/menu_pages/notification.dart';
 import '../pages/error_page.dart';
 import '../pages/gen_OTP.dart';
 import '../pages/history_page.dart';
-import '../pages/home_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/today_page.dart';
 import '../pages/tom_page.dart';
@@ -19,12 +20,13 @@ class MyRoutes {
   static String todayRoute = "/today";
   static String tomRoute = "/tomorrow";
   static String entrotpRoute = "/enterotp";
+  static String notifyRoute = "/notify";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
       case '/home':
-        return MaterialPageRoute(builder: (context) => const HomePage());
+        return MaterialPageRoute(builder: (context) => const BotNavPage());
       case '/genotp':
         return MaterialPageRoute(builder: (context) => const Genotp());
       case '/enterotp':
@@ -33,12 +35,15 @@ class MyRoutes {
         return MaterialPageRoute(builder: (context) => const HistoryPage());
       case '/add':
         return MaterialPageRoute(builder: (context) => const AddPage());
-      case 'profile':
+      case '/profile':
         return MaterialPageRoute(builder: (context) => const ProfilePage());
       case 'today':
         return MaterialPageRoute(builder: (context) => const TodayPage());
       case 'tomorrow':
         return MaterialPageRoute(builder: (context) => const TomPage());
+      case '/notify':
+        return MaterialPageRoute(
+            builder: (context) => const NotificationPage());
       default:
         return MaterialPageRoute(builder: (context) => const ErrorPage());
     }
