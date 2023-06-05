@@ -41,6 +41,7 @@ class TodayPage extends StatelessWidget {
                           ),
                         ],
                       ),
+                      //profile
                       Container(
                         padding: const EdgeInsets.all(12),
                         child: GestureDetector(

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class Genotp extends StatefulWidget {
   const Genotp({super.key});
 
+  // final String title;
+
   @override
   State<Genotp> createState() => _GenotpState();
 }
@@ -23,8 +25,8 @@ class _GenotpState extends State<Genotp> {
             children: [
               Image.asset(
                 "rout/images/OTP1.png",
-                width: 300,
-                height: 300,
+                width: 150,
+                height: 160,
               ),
               const SizedBox(
                 height: 10,
@@ -44,9 +46,13 @@ class _GenotpState extends State<Genotp> {
               const SizedBox(
                 height: 50,
               ),
-              Form(
-                key: formKey,
-                child: Column(
+              Container(
+                height: 55,
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -57,15 +63,9 @@ class _GenotpState extends State<Genotp> {
                           },
                           controller: mobile,
                           maxLength: 10,
-                          validator: (mobile) {
-                            if (mobile!.isEmpty || mobile.length != 10) {
+                          validator: (value) {
+                            if (mobile.text.length != 10) {
                               return "Please Enter a Valid Phone Number";
-                            } else if (!RegExp(
-                                    r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
-                                .hasMatch(mobile)) {
-                              return "Please Enter a Valid Phone Number";
-                            } else {
-                              return null;
                             }
                           },
                           keyboardType: TextInputType.number,
@@ -95,13 +95,24 @@ class _GenotpState extends State<Genotp> {
                         ),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                    )
+                    const Text(
+                      "|",
+                      style: TextStyle(fontSize: 33, color: Colors.grey),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Expanded(
+                        child: TextField(
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Phone",
+                      ),
+                    ))
                   ],
                 ),
               ),
-              SizedBox(height: 10),
               SizedBox(
                 height: 45,
                 width: double.infinity,

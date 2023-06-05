@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:everlast/pages/home_page.dart';
 
 class EventsTile extends StatelessWidget {
   final String imageAsset;
@@ -34,14 +33,11 @@ class EventsTile extends StatelessWidget {
                     width: 48,
                     height: 48,
                     decoration: BoxDecoration(
-                      color: Colors.purple,
-                      border: Border.all(color: Colors.purple),
                       image: DecorationImage(
                         image: AssetImage(imageAsset),
                         fit: BoxFit.cover,
                       ),
                     ),
-                    // color: Color.fromARGB(255, 137, 35, 148),
                   ),
                 ),
                 const SizedBox(width: 12),
