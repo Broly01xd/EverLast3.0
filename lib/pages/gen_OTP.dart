@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 class Genotp extends StatefulWidget {
   const Genotp({super.key});
 
-  // final String title;
-
   @override
   State<Genotp> createState() => _GenotpState();
 }
