@@ -27,7 +27,9 @@ class ProfilePage extends StatelessWidget {
               ProfileMenu(
                 icon: "rout/images/user-03-svgrepo-com.svg",
                 text: "My Account",
-                press: () {},
+                press: () {
+                  Navigator.pushNamed(context, "/MyAccountPage");
+                },
               ),
               ProfileMenu(
                 icon: "rout/images/notification-svgrepo-com.svg",

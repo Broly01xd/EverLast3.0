@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:everlast/pages/history_page.dart';
 import 'package:everlast/pages/otp_page.dart';
 import 'pages/home_page.dart';
+import 'pages/create_event.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/create',
+      initialRoute: '/genotp',
       onGenerateRoute: MyRoutes.generateRoute,
     );
   }

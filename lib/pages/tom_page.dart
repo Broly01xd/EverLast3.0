@@ -1,9 +1,5 @@
-import 'package:everlast/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:everlast/utils/tom_events_tile.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:flutter_date_picker_timeline/flutter_date_picker_timeline.dart';
-import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class TomPage extends StatelessWidget {
   const TomPage({super.key});

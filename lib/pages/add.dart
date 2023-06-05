@@ -61,6 +61,7 @@ class AddPage extends StatelessWidget {
                           SizedBox(width: 5),
                           ElevatedButton(
                             onPressed: () {
+                              Navigator.pushNamed(context, "/create");
                               // Add button onPressed logic here
                               print('Add button pressed');
                             },
