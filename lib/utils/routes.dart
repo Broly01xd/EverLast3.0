@@ -28,11 +28,11 @@ class MyRoutes {
     final args = settings.arguments;
     switch (settings.name) {
       case '/home':
-        return MaterialPageRoute(builder: (context) => const HomePage());
+        return MaterialPageRoute(builder: (context) => HomePage());
       case '/genotp':
-        return MaterialPageRoute(builder: (context) => const Genotp());
+        return MaterialPageRoute(builder: (context) => Genotp());
       case '/enterotp':
-        return MaterialPageRoute(builder: (context) => const OtpPage());
+        return MaterialPageRoute(builder: (context) => OtpPage());
       case '/history':
         return MaterialPageRoute(builder: (context) => HistoryPage());
       case '/add':
@@ -48,7 +48,7 @@ class MyRoutes {
         case '/MyAccountPage':
         return MaterialPageRoute(builder: (context) => MyAccountPage());
       default:
-        return MaterialPageRoute(builder: (context) => const ErrorPage());
+        return MaterialPageRoute(builder: (context) => ErrorPage());
     }
   }
 }
