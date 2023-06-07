@@ -51,6 +51,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^4.0.4
   animated_bottom_navigation_bar: ^1.2.0
+  ticket_widget: ^0.0.1
+  flutter_ticket: ^1.0.1
 
 
 dev_dependencies:
