@@ -30,7 +30,7 @@ class CreateEvent extends StatelessWidget {
                     top: 20,
                     right: 120,
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      margin: EdgeInsets.only(left: 10, right: 10),
                       decoration: BoxDecoration(
                         color: Colors.purple,
                         borderRadius: BorderRadius.circular(10),
@@ -48,112 +48,121 @@ class CreateEvent extends StatelessWidget {
                 ],
               ),
             ),
-       Expanded(
-  child: SingleChildScrollView(
-    child: Container(
-      padding: const EdgeInsets.only(left: 40, right: 40),
-      child: Form(
-        key: formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-            Text(
-              "Enter Event Details",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                height: 1,
-                
-                fontWeight: FontWeight.bold,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.only(left: 40, right: 40),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.04),
+                        Text(
+                          "Enter Event Details",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            height: 1,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.05),
+                        TextFormField(
+                          decoration:
+                              InputDecoration(labelText: "Event Name :"),
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.05),
+                        TextFormField(
+                          decoration: InputDecoration(labelText: "Name :"),
+                          // validator: (value) {
+                          //   if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
+                          //     return "Enter Full Name";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.05),
+                        TextFormField(
+                          decoration: InputDecoration(labelText: "Date:"),
+                          // validator: (value) {
+                          //   if (value!.isEmpty ||
+                          //       !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(value!)) {
+                          //     return "Enter  Date";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.05),
+                        TextFormField(
+                          decoration: InputDecoration(labelText: "Time:"),
+                          // validator: (value) {
+                          //   if (value!.isEmpty ||
+                          //       !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(value!)) {
+                          //     return "Enter Time";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.05),
+                        TextFormField(
+                          decoration: InputDecoration(labelText: "Location :"),
+                          // validator: (value) {
+                          //   if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
+                          //     return "Enter Location";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            TextFormField(
-              decoration: InputDecoration(labelText: "Event Name :"),
-  
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Expanded(child: Container()),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0, bottom: 20),
+                  // child: Container(
+                  //   height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        final SnackBar snackBar =
+                            SnackBar(content: Text('Creating Invitation'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                      Navigator.pushNamed(context, "/card");
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(12),
+                      primary: Colors.purple,
+                      elevation: 4,
+                      shadowColor: Colors.black.withOpacity(0.2),
+                    ),
+                    child: Icon(Icons.arrow_forward),
+                  ),
+                  // ),
+                ),
+              ],
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            TextFormField(
-              decoration: InputDecoration(labelText: "Name :"),
-              // validator: (value) {
-              //   if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
-              //     return "Enter Full Name";
-              //   } else {
-              //     return null;
-              //   }
-              // },
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            TextFormField(
-              decoration: InputDecoration(labelText: "Date:"),
-              // validator: (value) {
-              //   if (value!.isEmpty ||
-              //       !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(value!)) {
-              //     return "Enter  Date";
-              //   } else {
-              //     return null;
-              //   }
-              // },
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            TextFormField(
-              decoration: InputDecoration(labelText: "Time:"),
-              // validator: (value) {
-              //   if (value!.isEmpty ||
-              //       !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(value!)) {
-              //     return "Enter Time";
-              //   } else {
-              //     return null;
-              //   }
-              // },
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            TextFormField(
-              decoration: InputDecoration(labelText: "Location :"),
-              // validator: (value) {
-              //   if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
-              //     return "Enter Location";
-              //   } else {
-              //     return null;
-              //   }
-              // },
-            ),
-          ],
-        ),
-      ),
-    ),
-  ),
-),
-
-        Row(
-  mainAxisAlignment: MainAxisAlignment.end,
-  children: [
-    Expanded(child: Container()),
-    Container(
-      height: 50,
-      child: ElevatedButton(
-        onPressed: () {
-          if (formKey.currentState!.validate()) {
-            final SnackBar snackBar = SnackBar(content: Text('Creating Invitation'));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
-        },
-        style: ElevatedButton.styleFrom(
-          shape: CircleBorder(),
-          padding: EdgeInsets.all(12),
-          primary: Colors.purple,
-          elevation: 4,
-          shadowColor: Colors.black.withOpacity(0.2),
-        ),
-        child: Icon(Icons.arrow_forward),
-      ),
-    ),
-  ],
-),
-
-
-
           ],
         ),
       ),

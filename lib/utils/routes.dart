@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../pages/add.dart';
 import '../pages/bottom_nav_pages.dart';
+import '../pages/card.dart';
 import '../pages/create_event.dart';
 import '../pages/error_page.dart';
 import '../pages/gen_otp.dart';
@@ -23,7 +24,7 @@ class MyRoutes {
   static String entrotpRoute = "/enterotp";
   static String createventRoute = "/create";
   static String MyAccountPageRoute = "/MyAccountPage";
-
+  static String CardRoute = "/card";
   static String bottomnavRoute = "/bottomNav";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -47,6 +48,8 @@ class MyRoutes {
         return MaterialPageRoute(builder: (context) => TomPage());
       case '/create':
         return MaterialPageRoute(builder: (context) => CreateEvent());
+      case '/card':
+        return MaterialPageRoute(builder: (context) => CardPage());
       case '/MyAccountPage':
         return MaterialPageRoute(builder: (context) => MyAccountPage());
       default:

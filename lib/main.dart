@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/genotp',
+      initialRoute: '/create',
       onGenerateRoute: MyRoutes.generateRoute,
     );
   }
