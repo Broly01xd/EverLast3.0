@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
 import 'package:everlast/utils/add_events.dart';
 
 class AddPage extends StatelessWidget {
   const AddPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
           Container(
-            height: 190,
+            height: 70,
             child: Stack(
               children: [
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.purple,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(111),
@@ -23,68 +21,67 @@ class AddPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 20,
-                  left: 5,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    decoration: BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      "Eventify",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
+                   Center(
+                    child: Container(
+                      padding: EdgeInsets.only(top:20,),
+                      decoration: BoxDecoration(
+                        color: Colors.purple,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Text(
+                        "Eventify",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                    bottom: 15,
-                    left: 50,
-                    right: 0,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Create New",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, "/create");
-                              // Add button onPressed logic here
-                              print('Add button pressed');
-                            },
-                            child: Text(
-                              '+',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.purple,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              padding: EdgeInsets.all(8),
-                              primary: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
               ],
+              
             ),
+            
           ),
+          // Positioned(
+          //           child: Container(
+          
+          //             child: Column(
+          //               mainAxisAlignment: MainAxisAlignment.center,
+          //               children: [
+                          
+          //                 SizedBox(width: 25),
+          //                 ElevatedButton(
+          //                   onPressed: () {
+          //                     Navigator.pushNamed(context, "/create");
+          //                     // Add button onPressed logic here
+          //                     print('Add button pressed');
+          //                   },
+          //                   child: Text(
+          //                     '+',
+          //                     style: TextStyle(
+          //                       fontSize: 25,                              
+          //                       fontWeight: FontWeight.bold,
+          //                       color: Colors.purple,
+          //                     ),
+          //                   ),
+          //                   style: ElevatedButton.styleFrom(
+          //                     shape: CircleBorder(),
+          //                     padding: EdgeInsets.all(10),
+          //                     primary: Colors.white,
+          //                   ),
+          //                 ),
+          //                 const Text(
+          //                   "Create New",
+          //                   style: TextStyle(
+          //                     color: Colors.purple,
+          //                     fontSize: 16,
+                              
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           )),
           Container(
             child: Expanded(
               child: ListView(
@@ -94,34 +91,59 @@ class AddPage extends StatelessWidget {
                       eventName: 'Birthday Party',
                       eventWho: '',
                       eventDate: ''),
-                  // EventsTile(
-                  //   icon: Icons.man,
-                  //   eventName: 'Political speech',
-                  //   eventDate: '',
-                  //   eventWho: '',
-                  // ),
-                  // EventsTile(
-                  //   icon: Icons.book,
-                  //   eventName: 'Seminar',
-                  //   eventDate: ' ',
-                  //   eventWho: ' ',
-                  // ),
-                  // EventsTile(
-                  //   icon: Icons.business,
-                  //   eventName: 'Company meetings',
-                  //   eventDate: ' ',
-                  //   eventWho: ' ',
-                  // ),
-                  // EventsTile(
-                  //   icon: Icons.party_mode_sharp,
-                  //   eventName: 'Company party',
-                  //   eventDate: ' ',
-                  //   eventWho: ' ',
-                  // ),
+                 
                 ],
               ),
             ),
           ),
+          // Positioned(
+                    Container(
+          
+                      child: Row(
+                        // crossAxisAlignment: CrossAxisAlignment.end,
+                         mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          
+                          SizedBox(width: 35),
+                          Padding(
+                            padding: const EdgeInsets.only(right:23.5,bottom:8),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, "/create");
+                                // Add button onPressed logic here
+                                print('Add button pressed');
+                              },
+                              child: Text(
+                                '+',
+                                style: TextStyle(
+                                  fontSize: 25,                              
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.purple,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                shape: CircleBorder(),
+                                padding: EdgeInsets.all(10),
+                                primary: Colors.white,
+                              ),
+                            ),
+                          ),
+                         
+                        ],
+                      ),
+                    ),
+                     Padding(
+                       padding: const EdgeInsets.only(left:300,bottom: 20,),
+                       child: const Text(
+                              "Create New",
+                              style: TextStyle(
+                                color: Colors.purple,
+                                fontSize: 16,
+                                
+                              ),
+                            ),
+                     ),
+                  
         ],
       ),
     );

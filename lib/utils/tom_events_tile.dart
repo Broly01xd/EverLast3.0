@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+
 
 class EventsTile extends StatelessWidget {
   final IconData icon;

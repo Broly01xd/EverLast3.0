@@ -38,7 +38,7 @@ class ErrorPage extends StatelessWidget {
             width: 180,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, "/home");
+                Navigator.pushNamed(context, "/BotNavPage");
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromRGBO(192, 52, 217, 1),

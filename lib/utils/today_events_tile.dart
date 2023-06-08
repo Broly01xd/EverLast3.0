@@ -33,12 +33,13 @@ class EventsTile extends StatelessWidget {
                     width: 48,
                     height: 48,
                     decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 137, 35, 148),
                       image: DecorationImage(
                         image: AssetImage(imageAsset),
                         fit: BoxFit.cover,
                       ),
                     ),
-                    color: Color.fromARGB(255, 137, 35, 148),
+                    // color: Color.fromARGB(255, 137, 35, 148),
                   ),
                 ),
                 const SizedBox(width: 12),

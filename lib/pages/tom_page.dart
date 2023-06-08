@@ -38,6 +38,8 @@ class TomPage extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
+
+            
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -69,7 +71,7 @@ class TomPage extends StatelessWidget {
             ),
             Expanded(
               child: ClipRRect(
-                borderRadius: BorderRadius.only(topRight: Radius.circular(85)),
+                borderRadius: BorderRadius.only(topRight: Radius.circular(0.01)),
                 child: Container(
                   color: Colors.white,
                   child: Column(

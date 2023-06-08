@@ -1,35 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:everlast/pages/profile_page.dart';
 
-class MyAccountPage extends StatefulWidget {
-  @override
-  _MyAccountPageState createState() => _MyAccountPageState();
-}
-
-class _MyAccountPageState extends State<MyAccountPage> {
-  List<String> eventNames = [
-    'Event 1',
-    'Event 2',
-    'Event 3',
-    'Event 4',
-  ];
-
-  String selectedEventName = 'Event 1'; // Default selected value
-
-  void handleDropdownValueChanged(String newValue) {
-    setState(() {
-      selectedEventName = newValue;
-    });
-  }
+class MyAccountPage extends StatelessWidget {
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Account'),
-      ),
-      body: Center(
+      backgroundColor: Colors.white,
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 70,
+              child: Stack(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(0),
+                        topRight: Radius.circular(0),
+                        bottomLeft: Radius.circular(250),
+                        bottomRight: Radius.circular(250),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 15,
+                    right: 130,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.purple,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        " My Account",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+
+
+
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
               radius: 50,
@@ -40,39 +65,49 @@ class _MyAccountPageState extends State<MyAccountPage> {
               'ABC DEF',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
-            Text(
-              'abc.def@example.com',
-              style: TextStyle(fontSize: 16),
-            ),
+            // SizedBox(height: 10),
+            // Text(
+            //   'abc.def@example.com',
+            //   style: TextStyle(fontSize: 16),
+            // ),
             SizedBox(height: 20),
             ElevatedButton(
               child: Text('Edit Profile'),
               onPressed: () {
-                Navigator.pushNamed(context, '/edit_profile');
+                Navigator.pushNamed(context, '/BotNavPage');
               },
             ),
-            ElevatedButton(
-              child: Text('Change Password'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/change_password');
-              },
-            ),
-            ElevatedButton(
-              child: Text('Logout'),
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  '/login',
-                  (route) => false,
-                );
-              },
-            ),
-           
+            // ElevatedButton(
+            //   child: Text('Change Password'),
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/change_password');
+            //   },
+            // ),
+            // ElevatedButton(
+            //   child: Text('Logout'),
+            //   onPressed: () {
+            //     Navigator.pushNamedAndRemoveUntil(
+            //       context,
+            //       '/genotp',
+            //   (route) => false,
+            //      );
+            //   },
+            // ),
            
           ],
         ),
       ),
+          ],
+       ),
+      ),
     );
   }
 }
+
+
+      
+        
+ 
+
+
+

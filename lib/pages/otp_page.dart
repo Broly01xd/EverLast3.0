@@ -85,9 +85,8 @@ class _OtpPageState extends State<OtpPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/home");
+                    Navigator.pushNamed(context, "/BotNavPage");
                   },
-                  // child: Text("Generate OTP"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(192, 52, 217, 1),
                     shape: RoundedRectangleBorder(

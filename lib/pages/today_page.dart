@@ -48,13 +48,13 @@ class TodayPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ProfilePage(),
+                                builder: (context) => ProfilePage(),
                               ),
                             );
                           },
                           child: const CircleAvatar(
                             backgroundImage: NetworkImage(
-                              "https://i.ibb.co/bvHR444/IMG-2925.jpg",
+                              "",
                             ),
                             radius: 30,
                           ),
