@@ -5,6 +5,12 @@ import 'package:everlast/pages/my_account.dart';
 import 'components/menu_pages/help.dart';
 import 'components/menu_pages/notification.dart';
 
+import 'components/menu_pages/help.dart';
+import 'components/menu_pages/notification.dart';
+
+import 'components/menu_pages/help.dart';
+import 'components/menu_pages/notification.dart';
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -34,14 +40,7 @@ class ProfilePage extends StatelessWidget {
                     ProfileMenu(
                       icon: "rout/images/user-03-svgrepo-com.svg",
                       text: "My Account",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MyAccountPage(),
-                          ),
-                        );
-                      },
+                      press: () {},
                     ),
                     SizedBox(height: 10),
                     ProfileMenu(
@@ -75,18 +74,12 @@ class ProfilePage extends StatelessWidget {
                         );
                       },
                     ),
-                     SizedBox(height: 10),
+                    SizedBox(height: 10),
                     ProfileMenu(
                       icon: "rout/images/log-out-svgrepo-com.svg",
                       text: "Log Out",
                       press: () {},
                     ),
-                    // SizedBox(height: 10),
-                    // ProfileMenu(
-                    //   icon: "rout/images/log-out-svgrepo-com.svg",
-                    //   text: "Log Out",
-                    //   press: () {},
-                    // ),
                   ],
                 ),
               ),

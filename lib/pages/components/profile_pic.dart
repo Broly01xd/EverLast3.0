@@ -52,6 +52,7 @@ class _ProfilePicState extends State<ProfilePic> {
                 },
                 child: SvgPicture.asset(
                   "rout/images/icons8-camera (1).svg",
+               
                 ),
               ),
             ),

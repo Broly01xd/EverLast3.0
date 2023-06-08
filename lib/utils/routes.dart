@@ -2,6 +2,10 @@ import 'package:everlast/pages/otp_page.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/add.dart';
+import '../pages/my_account.dart';
+import '../pages/bottom_nav_pages.dart';
+import '../pages/card.dart';
+import '../pages/create_event.dart';
 import '../pages/error_page.dart';
 import '../pages/card.dart';
 import '../pages/gen_OTP.dart';
@@ -10,8 +14,6 @@ import '../pages/bottom_nav_pages.dart';
 import '../pages/profile_page.dart';
 import '../pages/today_page.dart';
 import '../pages/tom_page.dart';
-import '../pages/create_event.dart';
-import '../pages/my_account.dart';
 
 class MyRoutes {
   static String genotpRoute = "/genotp";
@@ -50,7 +52,9 @@ class MyRoutes {
         return MaterialPageRoute(builder: (context) => CardPage());
       case '/create':
         return MaterialPageRoute(builder: (context) => CreateEvent());
-        case '/MyAccountPage':
+      case '/card':
+        return MaterialPageRoute(builder: (context) => CardPage());
+      case '/MyAccountPage':
         return MaterialPageRoute(builder: (context) => MyAccountPage());
       case '/OtpPage':
         return MaterialPageRoute(builder: (context) => OtpPage());

@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.3+4"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      sha256: "0b0036e8cccbfbe0555fd83c1d31a6f30b77a96b598b35a5d36dd41f718695e9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.3+4"
   crypto:
     dependency: transitive
     description:
@@ -150,6 +158,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_clip_shadow:
+    dependency: transitive
+    description:
+      name: flutter_clip_shadow
+      sha256: "3f30224a0e132a427b434859e6e0420d7e51972b2215507e3f2c61f0f68e0560"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter_date_picker_timeline:
     dependency: "direct main"
     description:
@@ -187,6 +203,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.15"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      sha256: "950e77c2bbe1692bc0874fc7fb491b96a4dc340457f4ea1641443d0a6c1ea360"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.15"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -200,6 +224,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_ticket:
+    dependency: "direct main"
+    description:
+      name: flutter_ticket
+      sha256: ed3b3e59e3622226963d9f5206142feb2b64608dd488e0befc36fde3a0c1a6f6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

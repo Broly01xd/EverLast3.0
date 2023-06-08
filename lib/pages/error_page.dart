@@ -1,3 +1,4 @@
+// TODO Implement this library.
 import 'package:flutter/material.dart';
 
 class ErrorPage extends StatelessWidget {
@@ -54,6 +55,7 @@ class ErrorPage extends StatelessWidget {
           )
         ],
       ),
+      body: const Center(child: Text('Error')),
     );
   }
 }

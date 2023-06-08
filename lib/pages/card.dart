@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 
-// import 'package:flutter_ticket/flutter_ticket.dart';
-
 class CardPage extends StatefulWidget {
   const CardPage({super.key});
 
@@ -14,7 +12,7 @@ class _CardPageState extends State<CardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 131, 13, 133),
+      backgroundColor: Colors.purple,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 5.0),
@@ -39,14 +37,6 @@ class _CardPageState extends State<CardPage> {
                       primary: Colors.white,
                     ),
                   ),
-                  // CircleAvatar(
-                  //   backgroundColor: Colors.white,
-                  //   child: Icon(
-                  //     Icons.arrow_back_ios_new_outlined,
-                  //     color: Colors.purple,
-                  //     size: 20,
-                  //   ),
-                  // ),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10),
@@ -61,7 +51,7 @@ class _CardPageState extends State<CardPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 0.01),
+              SizedBox(height: 15),
               Center(
                 child: Text(
                   "Embrace life, create everlasting cherished memories.",
@@ -73,10 +63,10 @@ class _CardPageState extends State<CardPage> {
                       fontWeight: FontWeight.w200),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               TicketWidget(
                 width: 380,
-                height: 500,
+                height: 550,
                 isCornerRounded: true,
                 child: Stack(
                   children: [
@@ -98,28 +88,28 @@ class _CardPageState extends State<CardPage> {
                         Text(
                           "Event Name",
                           style: TextStyle(
-                            fontSize: 28,
+                            fontSize: 35,
                             color: Colors.black,
-                            fontWeight: FontWeight.w100,
+                            fontWeight: FontWeight.w700,
                             fontStyle: FontStyle.normal,
                           ),
                         ),
                         Text(
-                          "By NAME",
+                          "By org.NAME",
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 20,
                             color: Colors.black,
-                            fontWeight: FontWeight.w100,
+                            fontWeight: FontWeight.w700,
                             fontStyle: FontStyle.normal,
                           ),
                         ),
                         SizedBox(height: 30),
-                        Icon(Icons.location_on, color:Color.fromARGB(255, 141, 4, 151), size: 35),
+                        Icon(Icons.location_on, color: Colors.red, size: 35),
                         Text("St Aloysius College",
                             style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w100,
-                                color: Colors.black)),
+                                fontSize: 30,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.orange)),
                         SizedBox(height: 30),
                         Column(
                           children: [
@@ -143,23 +133,6 @@ class _CardPageState extends State<CardPage> {
                   ],
                 ),
               ),
-              ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/add");
-                      // Add button onPressed logic here
-                      // print('Add button pressed');
-                    },
-                    child: Icon(
-                      Icons.arrow_forward_outlined,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(0.8),
-                    primary:Color.fromARGB(255, 163, 62, 170),
-                    ),
-                  ),
             ],
           ),
         ),
@@ -172,8 +145,8 @@ class _CardPageState extends State<CardPage> {
           Text(
             title,
             style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w100,
+              color: Colors.deepOrangeAccent,
+              fontWeight: FontWeight.w700,
               fontSize: 25,
             ),
           ),
@@ -182,7 +155,7 @@ class _CardPageState extends State<CardPage> {
             width: 110,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: Color.fromARGB(255, 141, 4, 151),
+                color: Colors.purple.shade900,
                 borderRadius: BorderRadius.circular(5)),
             child: Text(
               details,
@@ -196,4 +169,3 @@ class _CardPageState extends State<CardPage> {
         ],
       );
 }
-
