@@ -10,6 +10,7 @@ import 'components/menu_pages/notification.dart';
 
 import 'components/menu_pages/help.dart';
 import 'components/menu_pages/notification.dart';
+import 'gen_OTP.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -40,7 +41,14 @@ class ProfilePage extends StatelessWidget {
                     ProfileMenu(
                       icon: "rout/images/user-03-svgrepo-com.svg",
                       text: "My Account",
-                      press: () {},
+                      press: () {Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyAccountPage(),
+                          ),
+                        );
+                      },
+                      
                     ),
                     SizedBox(height: 10),
                     ProfileMenu(
@@ -78,7 +86,14 @@ class ProfilePage extends StatelessWidget {
                     ProfileMenu(
                       icon: "rout/images/log-out-svgrepo-com.svg",
                       text: "Log Out",
-                      press: () {},
+                      press: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Genotp(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

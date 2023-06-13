@@ -1,8 +1,8 @@
-import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:everlast/pages/profile_page.dart';
+import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-
 import '../utils/today_events_tile.dart';
+
+import 'package:everlast/pages/profile_page.dart';
 
 class TodayPage extends StatelessWidget {
   const TodayPage({Key? key}) : super(key: key);
@@ -84,6 +84,25 @@ class TodayPage extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     showDatePicker(
+                  //       context: context,
+                  //       initialDate: DateTime.now(),
+                  //       firstDate: DateTime(2000),
+                  //       lastDate: DateTime(2100),
+                  //     ).then((selectedDate) {
+                  //       if (selectedDate != null) {
+                  //         // Handle date selection
+                  //         // You can use the selectedDate variable to access the chosen date
+                  //       }
+                  //     });
+                  //   },
+                    // child: Text(
+                    //   'Select Date',
+                    //   style: TextStyle(color: Colors.white),
+                    // ),
+                 // ),
                 ],
               ),
             ),

@@ -74,7 +74,7 @@ class MyAccountPage extends StatelessWidget {
             ElevatedButton(
               child: Text('Edit Profile'),
               onPressed: () {
-                Navigator.pushNamed(context, '/BotNavPage');
+                Navigator.pushNamed(context, '/Userdetails');
               },
             ),
             // ElevatedButton(

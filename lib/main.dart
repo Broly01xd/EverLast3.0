@@ -10,12 +10,11 @@ import 'package:everlast/pages/history_page.dart';
 import 'package:everlast/pages/otp_page.dart';
 import 'pages/bottom_nav_pages.dart';
 import 'pages/create_event.dart';
-import 'pages/invitation.dart';
+
 
 void main() {
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/create',
+      initialRoute:MyRoutes.createventRoute,
       onGenerateRoute: MyRoutes.generateRoute,
     );
   }

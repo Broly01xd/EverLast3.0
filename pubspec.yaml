@@ -35,15 +35,15 @@ dependencies:
   line_awesome_flutter: ^2.0.0
   flutter_svg: ^2.0.5
   custom_pop_up_menu: ^1.2.4
-  flutter_date_pickers: ^0.4.2
-  flutter_date_picker_timeline: ^0.3.3
-  date_picker_timeline: ^1.2.3
-  # image_picker: ^0.8.7+5
+  
+ 
+  
+  image_picker: ^0.8.7+5
   package_info_plus: ^4.0.2
   share: ^2.0.4
   pinput: ^2.2.31
  # google_maps_flutter: ^2.0.10
-  image_picker: ^0.8.4+3
+  #image_picker: ^0.8.4+3
   #image_picker: ^0.8.4+4
  #table_calendar: ^3.0.3
   #flutter_google_places: ^0.3.3
@@ -58,6 +58,7 @@ dependencies:
   animated_bottom_navigation_bar: ^1.2.0
   ticket_widget: ^0.0.1
   table_calendar: ^3.0.8
+  date_picker_timeline: ^1.2.3
 
 
 dev_dependencies:

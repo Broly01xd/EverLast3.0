@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class EventsTile extends StatelessWidget {
   final String imageAsset;
   final String eventName;
@@ -92,7 +91,6 @@ class EventsTile extends StatelessWidget {
       ),
     );
   }
-
   void _showDeleteConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,

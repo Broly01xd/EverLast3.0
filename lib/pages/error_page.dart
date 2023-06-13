@@ -55,7 +55,7 @@ class ErrorPage extends StatelessWidget {
           )
         ],
       ),
-      body: const Center(child: Text('Error')),
+     
     );
   }
 }

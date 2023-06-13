@@ -67,11 +67,12 @@ class _OtpPageState extends State<OtpPage> {
                 height: 50,
               ),
               Pinput(
+                length: 6,
                 defaultPinTheme: defaultPinTheme,
                 focusedPinTheme: focusedPinTheme,
                 submittedPinTheme: submittedPinTheme,
                 validator: (s) {
-                  return s == '2222' ? null : 'Pin is incorrect';
+                  return s == '222222' ? null : 'Pin is incorrect';
                 },
                 pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                 showCursor: true,
@@ -85,7 +86,7 @@ class _OtpPageState extends State<OtpPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/BotNavPage");
+                    Navigator.pushNamed(context, "/Userdetails");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(192, 52, 217, 1),

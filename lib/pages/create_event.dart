@@ -5,83 +5,123 @@ import 'package:image_picker/image_picker.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CreateEvent extends StatefulWidget {
-@override
-_CreateEventState createState() => _CreateEventState();
+  @override
+  _CreateEventState createState() => _CreateEventState();
 }
 
 class _CreateEventState extends State<CreateEvent> {
-final formKey = GlobalKey<FormState>();
-String? _imagePath;
-DateTime? _selectedDate; // Added variable to store selected date
-TimeOfDay? _selectedTime; // Added variable to store selected time
+  final formKey = GlobalKey<FormState>();
+  String? _imagePath;
+  DateTime? _selectedDate; // Added variable to store selected date
+  TimeOfDay? _selectedTime; // Added variable to store selected time
 
-Future<void> _pickImageFromGallery() async {
-final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
-if (pickedImage != null) {
-setState(() {
-_imagePath = pickedImage.path;
-});
-}
+  Future<void> _pickImageFromGallery() async {
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      setState(() {
+        _imagePath = pickedImage.path;
+      });
+    }
+  }
+TimeOfDay? _fromTime;
+TimeOfDay? _toTime;
+
+void _selectFromTime() async {
+  final TimeOfDay? pickedTime = await showTimePicker(
+    context: context,
+    initialTime: _fromTime ?? TimeOfDay.now(),
+  );
+
+  if (pickedTime != null) {
+    setState(() {
+      _fromTime = pickedTime;
+    });
+  }
 }
 
-Future<void> _selectTime() async {
-final TimeOfDay? pickedTime = await showTimePicker(
-context: context,
-initialTime: TimeOfDay.now(),
-);
-if (pickedTime != null) {
-setState(() {
-_selectedTime = pickedTime;
-});
-}
-}
+void _selectToTime() async {
+  final TimeOfDay? pickedTime = await showTimePicker(
+    context: context,
+    initialTime: _toTime ?? TimeOfDay.now(),
+  );
 
-@override
-Widget build(BuildContext context) {
-return Scaffold(
-backgroundColor: Colors.white,
-body: SafeArea(
-child: Column(
-children: [
-Container(
-height: 70,
-child: Stack(
-children: [
-Container(
-width: MediaQuery.of(context).size.width,
-decoration: const BoxDecoration(
-color: Colors.purple,
-borderRadius: BorderRadius.only(
-topLeft: Radius.circular(0),
-topRight: Radius.circular(0),
-bottomLeft: Radius.circular(250),
-bottomRight: Radius.circular(250),
-),
-),
-),
-Positioned(
-top: 20,
-right: 120,
-child: Container(
-padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-decoration: BoxDecoration(
-color: Colors.purple,
-borderRadius: BorderRadius.circular(10),
-),
-child: const Text(
-" Event Details",
-style: TextStyle(
-color: Colors.white,
-fontSize: 24,
-fontWeight: FontWeight.bold,
-),
-),
-),
-),
-],
-),
-),
-Expanded(
+  if (pickedTime != null) {
+    setState(() {
+      _toTime = pickedTime;
+    });
+  }
+}
+  // Rest of the code...
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              height: 70,
+              child: Stack(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: const BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(0),
+                        topRight: Radius.circular(0),
+                        bottomLeft: Radius.circular(250),
+                        bottomRight: Radius.circular(250),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 15,
+                    right: 120,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.purple,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Text(
+                        " Event Details",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                    ),
+                  ),
+                  Positioned(
+                    left: 10,
+                    top: 10,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context,"/add"); 
+                      },
+                      child: Icon(
+                        Icons.arrow_back_ios_new_outlined,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(8),
+                        primary: Colors.purple,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
 child: SingleChildScrollView(
 child: Container(
 padding: const EdgeInsets.only(left: 40, right: 40),
@@ -152,30 +192,68 @@ text: _selectedDate != null
 : "",
 ),
 ),
+
+
 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 GestureDetector(
-onTap: _selectTime, // Call the method to select time
-child: AbsorbPointer(
-child: TextFormField(
-decoration: InputDecoration(
-labelText: "Time:",
-suffixIcon: Icon(Icons.access_time),
+  onTap: _selectFromTime,
+  child: AbsorbPointer(
+    child: TextFormField(
+      decoration: InputDecoration(
+        labelText: "From Time:",
+        suffixIcon: Icon(Icons.access_time),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Enter From Time";
+        } else {
+          return null;
+        }
+      },
+      readOnly: true,
+      controller: TextEditingController(
+        text: _fromTime != null
+            ? _fromTime!.format(context)
+            : "",
+      ),
+    ),
+  ),
 ),
+SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+GestureDetector(
+  onTap: _selectToTime,
+  child: AbsorbPointer(
+    child: TextFormField(
+      decoration: InputDecoration(
+        labelText: "To Time:",
+        suffixIcon: Icon(Icons.access_time),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Enter To Time";
+        } else {
+          return null;
+        }
+      },
+      readOnly: true,
+      controller: TextEditingController(
+        text: _toTime != null
+            ? _toTime!.format(context)
+            : "",
+      ),
+    ),
+  ),
+),          
+SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+TextFormField(
+decoration: InputDecoration(labelText: "Address:"),
 validator: (value) {
-if (value!.isEmpty) {
-return "Enter Time";
+if (value!.isEmpty || !RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
+return "Enter Location";
 } else {
 return null;
 }
 },
-readOnly: true, // Make the field read-only
-controller: TextEditingController(
-text: _selectedTime != null
-? "${_selectedTime!.format(context)}"
-: "",
-),
-),
-),
 ),
 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 TextFormField(
@@ -199,69 +277,23 @@ return null;
 }
 },
 ),
-
 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-Text(
-"Select Image:",
-style: TextStyle(
-fontSize: 15,
-fontWeight: FontWeight.normal,
-),
-),
-
-SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-GestureDetector(
-onTap: _pickImageFromGallery, // Call the method to pick an image from the gallery
-child: Row(
-children: [
-Icon(Icons.add_a_photo),
-SizedBox(width: 10),
-Container(
-width: 100,
-height: 100,
-decoration: BoxDecoration(
-border: Border.all(color: Colors.black),
-borderRadius: BorderRadius.circular(15),
-),
-child: _imagePath != null
-? Image.file(File(_imagePath!), fit: BoxFit.cover)
-: null,
-),
-],
-),
-),
+                        Center(
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                                Navigator.pushNamed(context, "/Uploadinvi");
+                                // Add button onPressed logic here
+                                print('Add button pressed');
+                              },
+                            icon: Icon(Icons.image),
+                            label: Text('Upload Image'),
+                          ),
+                        ),
 ],
 ),
 ),
 ),
 ),
-),
-Row(
-mainAxisAlignment: MainAxisAlignment.center,
-children: [
-Expanded(child: Container()),
-Container(
-height: 50,
-child: ElevatedButton(
-onPressed: () {
-Navigator.pushNamed(context, "/card");
-if (formKey.currentState!.validate()) {
-final SnackBar snackBar = SnackBar(content: Text('Creating Invitation'));
-ScaffoldMessenger.of(context).showSnackBar(snackBar);
-}
-},
-style: ElevatedButton.styleFrom(
-shape: CircleBorder(),
-padding: EdgeInsets.all(12),
-// primary: Colors.purple,
-elevation: 4,
-shadowColor: Colors.black.withOpacity(0.2),
-),
-child: Icon(Icons.arrow_forward),
-
-),
-),
-],
 ),
 ],
 ),
@@ -269,3 +301,5 @@ child: Icon(Icons.arrow_forward),
 );
 }
 }
+
+

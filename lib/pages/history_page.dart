@@ -47,19 +47,13 @@ class HistoryPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-           
+            ), 
           ],
        ),
       ),
     );
   }
 }
-
-
-      
-        
- 
 
 
 
