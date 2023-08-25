@@ -1,24 +1,24 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+
 class ProfilePic extends StatefulWidget {
   const ProfilePic({Key? key}) : super(key: key);
   @override
   _ProfilePicState createState() => _ProfilePicState();
 }
+
 class _ProfilePicState extends State<ProfilePic> {
-  String? _imagePath;
   Future<void> _pickImageFromGallery() async {
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
-      setState(() {
-        _imagePath = pickedImage.path;
-      });
+      setState(() {});
     }
   }
-  @override
+
+  get image => null;
+
   Widget build(BuildContext context) {
     return SizedBox(
       height: 150,
@@ -27,11 +27,6 @@ class _ProfilePicState extends State<ProfilePic> {
         clipBehavior: Clip.none,
         fit: StackFit.expand,
         children: [
-          CircleAvatar(
-            backgroundImage:
-                _imagePath != null ? FileImage(File(_imagePath!)) : null,
-            child: _imagePath == null ? const Text('No Image') : null,
-          ),
           Positioned(
             right: -10,
             bottom: 16,
@@ -47,12 +42,10 @@ class _ProfilePicState extends State<ProfilePic> {
                       borderRadius: BorderRadius.circular(50)),
                 ),
                 onPressed: () {
-                  print('TextButton pressed'); // Add this debug print
                   _pickImageFromGallery();
                 },
                 child: SvgPicture.asset(
                   "rout/images/icons8-camera (1).svg",
-               
                 ),
               ),
             ),

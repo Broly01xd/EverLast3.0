@@ -35,31 +35,47 @@ dependencies:
   line_awesome_flutter: ^2.0.0
   flutter_svg: ^2.0.5
   custom_pop_up_menu: ^1.2.4
-  
- 
-  
   image_picker: ^0.8.7+5
   package_info_plus: ^4.0.2
   share: ^2.0.4
   pinput: ^2.2.31
- # google_maps_flutter: ^2.0.10
-  #image_picker: ^0.8.4+3
-  #image_picker: ^0.8.4+4
- #table_calendar: ^3.0.3
-  #flutter_google_places: ^0.3.3
-  
+
   flutter:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  google_fonts: ^5.0.0
+  google_fonts: ^4.0.4
   animated_bottom_navigation_bar: ^1.2.0
   ticket_widget: ^0.0.1
   table_calendar: ^3.0.8
   date_picker_timeline: ^1.2.3
-
+  firebase_storage: ^11.2.2
+  provider: ^6.0.5
+  firebase_auth: ^4.6.2
+  cloud_firestore: ^4.8.0
+  shared_preferences: ^2.1.2
+  country_picker: ^2.0.20
+  url_launcher: ^6.1.11
+  uni_links: ^0.5.1
+  intl: ^0.18.1
+  firebase_dynamic_links: ^5.3.3
+  firebase: ^9.0.3
+  messaging: ^0.2.1
+  firebase_messaging: ^14.6.5
+  curved_navigation_bar: ^1.0.3
+  fancy_bottom_navigation: ^0.3.3
+  share_plus: ^7.0.2
+  path_provider: ^2.0.15
+  date_time_picker_widget: ^2.0.0
+  flutter_local_notifications: ^9.1.5
+  rxdart: ^0.27.7
+  timezone: ^0.8.0
+  flare_flutter: ^3.0.2
+  firebase_core: ^2.15.1
+  firebase_analytics: ^10.4.5
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

@@ -35,7 +35,7 @@ class ProfileMenu extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                 ),
               ),
               const Icon(

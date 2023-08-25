@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "807956604340",
+    "project_id": "everlast-561c0",
+    "storage_bucket": "everlast-561c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807956604340:android:19f0efe70dd6b7c8437ee1",
+        "android_client_info": {
+          "package_name": "com.example.everlast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807956604340-57rvi9t53c67l51ar9s3a9l47su1ne30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_D4HfdJQtwBJ8EneAebGtfMkgTr_gGss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807956604340-57rvi9t53c67l51ar9s3a9l47su1ne30.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "807956604340-r3t9qt4pva026st3cemfqvm2ca97n68s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.everlast"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,125 +1,193 @@
+import 'package:country_picker/country_picker.dart';
+import 'package:everlast/pages/provider/auth_provider.dart';
+import 'package:everlast/pages/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Genotp extends StatefulWidget {
-  const Genotp({super.key});
+  const Genotp({Key? key}) : super(key: key);
 
   @override
   State<Genotp> createState() => _GenotpState();
 }
 
 class _GenotpState extends State<Genotp> {
-  TextEditingController mobile = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+  final TextEditingController phoneController = TextEditingController();
+  Country selectedCountry = Country(
+    phoneCode: "91",
+    countryCode: "IN",
+    e164Sc: 0,
+    geographic: true,
+    level: 1,
+    name: "India",
+    example: "India",
+    displayName: "India",
+    displayNameNoCountryCode: "IN",
+    e164Key: "",
+  );
 
   @override
   Widget build(BuildContext context) {
+    
+    phoneController.selection = TextSelection.fromPosition(
+      TextPosition(
+        offset: phoneController.text.length,
+      ),
+    );
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.only(left: 25, right: 25),
-        alignment: Alignment.center,
+      body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "rout/images/OTP1.png",
-                width: 250,
-                height: 260,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                "Phone Verification",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                "We need to register your phone before getting  started!",
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Container(
-                height: 85,
-                child: Form(
-                  key: formKey,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: mobile,
-                      maxLength: 10,
-                      // decoration: buildInputDecoration(Icons.phone, "Phone"),
-                      keyboardType: TextInputType.phone,
-                      onChanged: (mobile) {
-                        formKey.currentState?.validate();
-                      },
-                      validator: (mobile) {
-                        if (mobile!.isEmpty || mobile.length != 10) {
-                          return "Please Enter a Phone Number";
-                        } else if (!RegExp(
-                                r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
-                            .hasMatch(mobile)) {
-                          return null;
-                        }
-                      },
-                      decoration: InputDecoration(
-                        counterText: '',
-                        labelText: "Enter Phone Number",
-                        enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.grey, width: 1.0),
-                            borderRadius: BorderRadius.circular(24)),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 10.0,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6.0),
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 20.0),
-                        ),
-                        hintText: "Enter Your Moblie Number",
-                        hintStyle: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15,
-                            fontFamily: 'Poppins'),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+              child: Column(
+                children: [
+
+                  Container(
+                    width: 200,
+                    height: 200,
+                    padding: const EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.purple.shade50,
+                    ),
+                    child: Image.asset(
+                      "rout/images/OTP1.png",
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    "Register",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Add your phone number. We'll send you a verification code",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black38,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    keyboardType:
+                        TextInputType.number, // Added keyboardType property
+                    cursorColor: Colors.purple,
+                    controller: phoneController,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        phoneController.text = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Enter phone number",
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                        color: Colors.grey.shade600,
                       ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Colors.black12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Colors.black12),
+                      ),
+                      prefixIcon: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        child: InkWell(
+                          onTap: () {
+                            showCountryPicker(
+                              context: context,
+                              countryListTheme: const CountryListThemeData(
+                                bottomSheetHeight: 550,
+                              ),
+                              onSelect: (value) {
+                                setState(() {
+                                  selectedCountry = value;
+                                });
+                              },
+                            );
+                          },
+                          child: Text(
+                            "${selectedCountry.flagEmoji} + ${selectedCountry.phoneCode}",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      //
+                      suffixIcon: phoneController.text.length > 9
+                          ? Container(
+                              height: 30,
+                              width: 30,
+                              margin: const EdgeInsets.all(10.0),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.green,
+                              ),
+                              child: const Icon(
+                                Icons.done,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            )
+                          : null,
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 0.5,
-              ),
+                  //login button
+                   const SizedBox(height: 20),
               SizedBox(
-                height: 55,
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      Navigator.pushNamed(context, "/enterotp");
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(192, 52, 217, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                height: 50,
+                child: _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.purple,
+                        ),
+                      )
+                    : CustomButton(
+                        text: "Login",
+                        onPressed: () => sendPhoneNumber(),
                     ),
                   ),
-                  child: const Text("Generate OTP",
-                      style: TextStyle(fontWeight: FontWeight.w900)),
-                ),
-              )
-            ],
+                ],
+              ),
+            ),
           ),
         ),
       ),
     );
   }
+
+   void sendPhoneNumber() {
+  final ap = Provider.of<AuthProvider>(context, listen: false);
+  String phoneNumber = phoneController.text.trim();
+
+  setState(() {
+    _isLoading = true; // Show loading indicator
+  });
+
+  ap.signInwithPhone(context, "+${selectedCountry.phoneCode}$phoneNumber", () {
+    setState(() {
+      _isLoading = false; // Hide loading indicator
+    });
+  });
+}
+
+
 }

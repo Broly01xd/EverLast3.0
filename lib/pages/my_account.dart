@@ -1,113 +1,131 @@
+import 'dart:io';
+import 'package:everlast/model/user_model.dart';
+import 'package:everlast/pages/provider/auth_provider.dart';
+import 'package:everlast/pages/user_details.dart';
+import 'package:everlast/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:everlast/pages/profile_page.dart';
+import 'package:provider/provider.dart';
 
-class MyAccountPage extends StatelessWidget {
+class MyAccountPage extends StatefulWidget {
+  const MyAccountPage({super.key});
+
+  @override
+  State<MyAccountPage> createState() => _MyAccountPageState();
+}
+
+class _MyAccountPageState extends State<MyAccountPage> {
   final formKey = GlobalKey<FormState>();
+  File? image;
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+
+  void selectImage() async {
+    image = await pickImage(context);
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    emailController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    String uname = ap.userModel.name;
+    String email = ap.userModel.email;
+    return MultiProvider(providers: [
+      Provider<AuthProvider>(create: (_) => AuthProvider()),
+    ], child: Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'My Account',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        // elevation: 0, // Remove elevation for a flat app bar
+      ),
+      backgroundColor: Colors.grey[100], // Light background color
       body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              height: 70,
-              child: Stack(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(0),
-                        topRight: Radius.circular(0),
-                        bottomLeft: Radius.circular(250),
-                        bottomRight: Radius.circular(250),
-                      ),
-                    ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.purple,
+                    width: 2,
                   ),
-                  Positioned(
-                    top: 15,
-                    right: 130,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.purple,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        " My Account",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-
-
-
-                  ),
-                ],
+                ),
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(ap.userModel.profileImage),
+                  radius: 80,
+                ),
               ),
-            ),
-            Expanded(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/profile_picture.jpg'),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'ABC DEF',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            // SizedBox(height: 10),
-            // Text(
-            //   'abc.def@example.com',
-            //   style: TextStyle(fontSize: 16),
-            // ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: Text('Edit Profile'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/Userdetails');
-              },
-            ),
-            // ElevatedButton(
-            //   child: Text('Change Password'),
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, '/change_password');
-            //   },
-            // ),
-            // ElevatedButton(
-            //   child: Text('Logout'),
-            //   onPressed: () {
-            //     Navigator.pushNamedAndRemoveUntil(
-            //       context,
-            //       '/genotp',
-            //   (route) => false,
-            //      );
-            //   },
-            // ),
-           
-          ],
+              const SizedBox(height: 20),
+              Text(
+                '$uname',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '$email',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: () {
+                  storeData();
+                  // Navigator.pushNamed(context, '/Userdetails');
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => UserInfromationScreen(
+                    userModel: ap.userModel,
+                  )));
+                },
+                icon: const Icon(Icons.edit, color: Colors.white),
+                label: const Text(
+                  'Edit Profile',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.purple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 5,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-          ],
-       ),
-      ),
+    ),);
+  }
+
+  void storeData() async {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    UserModel userModel = UserModel(
+      name: nameController.text.trim(),
+      email: emailController.text.trim(),
+      profileImage: "",
+      createdAt: '',
+      phone: '',
+      uid: '',
     );
   }
 }
-
-
-      
-        
- 
-
-
-

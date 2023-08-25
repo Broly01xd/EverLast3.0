@@ -1,4 +1,30 @@
-// TODO Implement this library.
+// import 'package:flutter/material.dart';
+
+// class ErrorPage extends StatelessWidget {
+//   const ErrorPage({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             CircularProgressIndicator(),
+//             SizedBox(height: 20),
+//             Text(
+//               '404 Page not found',
+//               style: TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
+//               textAlign: TextAlign.center,
+//             ),
+//             SizedBox(height: 40),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
 
 class ErrorPage extends StatelessWidget {
@@ -42,7 +68,7 @@ class ErrorPage extends StatelessWidget {
                 Navigator.pushNamed(context, "/BotNavPage");
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromRGBO(192, 52, 217, 1),
+                backgroundColor: const Color.fromRGBO(192, 52, 217, 1),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -55,7 +81,6 @@ class ErrorPage extends StatelessWidget {
           )
         ],
       ),
-     
     );
   }
 }
