@@ -265,7 +265,7 @@ class AuthProvider extends ChangeNotifier {
       //uploading to database
       await _firebaseFirestore
           .collection("events")
-          .doc(id) // leave doc path to blank to auto generate the document id
+          .doc(id) // leave doc path to blank to auto  generate the document id
           .set(eventModel.toMap())
           .then((value) {
         onSuccess(id);
