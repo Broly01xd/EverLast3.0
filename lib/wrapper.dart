@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everlast/pages/WelcomeScreen.dart';
 import 'package:everlast/pages/bottom_nav_pages.dart';
 import 'package:everlast/pages/card.dart';
-import 'package:everlast/pages/gen_OTP.dart';
 import 'package:everlast/pages/provider/auth_provider.dart';
 import 'package:everlast/pages/user_details.dart';
 import 'package:everlast/utils/dynamic_links.dart';
@@ -20,7 +19,7 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  late final ap;
+  late final AuthProvider ap;
   FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
   @override
@@ -64,7 +63,17 @@ class _WrapperState extends State<Wrapper> {
                     return CardPage(documentId: dynamicLink.link.path.substring(1));
                   }
                   
-                  return const BotNavPage();
+                  return FutureBuilder(
+                    future: ap.getDataFromFirestore(),
+                    builder: (context, snapshot) {
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+                      
+                      return const BotNavPage();
+                    }
+                  );
                 }
 
                 return const UserInfromationScreen();

@@ -57,7 +57,7 @@ dependencies:
   cloud_firestore: ^4.8.0
   shared_preferences: ^2.1.2
   country_picker: ^2.0.20
-  url_launcher: ^6.1.11
+  url_launcher: ^6.1.12
   uni_links: ^0.5.1
   intl: ^0.18.1
   firebase_dynamic_links: ^5.3.3
@@ -80,6 +80,15 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  image_path: rout\images\logo.jpeg
+  min_sdk_android: 21
+
+
+     
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

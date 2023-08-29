@@ -28,7 +28,7 @@ class AuthProvider extends ChangeNotifier {
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   AuthProvider() {
     checkSignIn();
-    getDataFromFirestore();
+    // getDataFromFirestore();
   }
 
   // get DateTime => null;

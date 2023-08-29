@@ -111,9 +111,6 @@ class _MyAddPageState extends State<AddPage> {
                   stream: FirebaseFirestore.instance
                       .collection('events')
                       .where('id', isEqualTo: _uid)
-                      
-                      //  .where('joined_user', arrayContains: _uid)
-                      // .where('FromTime', isNotEqualTo: Timestamp.now())
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -127,7 +124,7 @@ class _MyAddPageState extends State<AddPage> {
                               highlightColor: Colors.grey[100]!,
                               child: ListView.builder(
                                 itemCount:
-                                    5, // Adjust the number of shimmering items
+                                    5, 
                                 itemBuilder:
                                     (BuildContext context, int index) {
                                   return EventsTileShimmer();
@@ -145,7 +142,7 @@ class _MyAddPageState extends State<AddPage> {
                                    
                                     const SizedBox(height: 5),
                                     Image.asset(
-                                      'rout/images/123.png', // Adjust the image path
+                                      'rout/images/123.png',
                                       width: 200,
                                       height: 200,
                                     ),

@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../model/event_model.dart';
 import 'bottom_nav_pages.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CardPage extends StatefulWidget {
   final String documentId;
@@ -39,6 +40,7 @@ class _CardPageState extends State<CardPage> {
     // DynamicLinkProvider().initDynamicLink(context);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,13 +210,34 @@ class _CardPageState extends State<CardPage> {
                             right: 20,
                           ),
                           child: Center(
-                            child: Text(
-                              eventModel.location,
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w500,
-                                color: color2,
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  eventModel.address,
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w500,
+                                    color: color2,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                GestureDetector(
+                                  onTap: () {
+                                    _launchGoogleMaps(eventModel
+                                        .location); // Replace with the actual location URL
+                                  },
+                                  child: Text(
+                                    "Open in Google Maps", // Display text for the link
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),
@@ -318,7 +341,6 @@ class _CardPageState extends State<CardPage> {
                                   const SizedBox(height: 10),
                                   Text(
                                     'To : $toDateStr',
-                                    
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
@@ -330,13 +352,13 @@ class _CardPageState extends State<CardPage> {
                             ),
                           ],
                         ),
-                // arrowbutton 
+                        // arrowbutton
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.04,
                             width: MediaQuery.of(context).size.height * 0.02),
                         ElevatedButton(
                           onPressed: () async {
-                             final user = FirebaseAuth.instance.currentUser;
+                            final user = FirebaseAuth.instance.currentUser;
                             if (user != null) {
                               final userId =
                                   user.uid; // Make sure userId is a string
@@ -361,8 +383,8 @@ class _CardPageState extends State<CardPage> {
                               print("User is not signed in");
                             }
                           },
-                            //  Navigator.pushNamed(context, "/add");
-                          
+                          //  Navigator.pushNamed(context, "/add");
+
                           child: Icon(
                             Icons.arrow_forward_ios,
                             color: color1,
@@ -394,7 +416,6 @@ class _CardPageState extends State<CardPage> {
             .doc(widget.documentId)
             .get(),
         builder: (context, snapshot) {
-         
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const SizedBox.shrink();
           }
@@ -460,20 +481,20 @@ class _CardPageState extends State<CardPage> {
                         final eventName = eventData['EventName'];
                         final createrName = eventData['Name'];
                         final durationType = eventData['durationType'];
-                       
-                        final time = (eventData['FromTime'] as Timestamp).toDate();
+
+                        final time =
+                            (eventData['FromTime'] as Timestamp).toDate();
 
                         final beforeTime = Duration(
-                          minutes: durationType == 'minute' ? duration : 0,
-                          hours: durationType == 'hour' ? duration : 0,
-                          days: durationType == 'day' ? duration : 0
-                        );
-                                
-                              
+                            minutes: durationType == 'minute' ? duration : 0,
+                            hours: durationType == 'hour' ? duration : 0,
+                            days: durationType == 'day' ? duration : 0);
+
                         NotificationApi.showScheduledNotification(
-                        id: Random().nextInt(10000),
-                        scheduleTime: time.subtract(beforeTime
-                        ), title: 'Event Reminder', body: eventName+" by "+ createrName);
+                            id: Random().nextInt(10000),
+                            scheduleTime: time.subtract(beforeTime),
+                            title: 'Event Reminder',
+                            body: eventName + " by " + createrName);
 
                         // Navigate to the desired page after joining
                         Navigator.pushReplacement(
@@ -568,6 +589,7 @@ class _CardPageState extends State<CardPage> {
       ),
     );
   }
+
   Future<String> getImageUrl(String imagePath) async {
     try {
       final Reference storageRef =
@@ -577,6 +599,14 @@ class _CardPageState extends State<CardPage> {
     } catch (e) {
       print('Error getting image URL: $e');
       return '';
+    }
+  }
+
+  Future<void> _launchGoogleMaps(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 }

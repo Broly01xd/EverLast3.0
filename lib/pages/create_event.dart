@@ -21,6 +21,7 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
+  bool _isSubmitting = false;
   late DateTime fromTime;
   late DateTime toTime;
   final picker = ImagePicker();
@@ -42,9 +43,13 @@ class _CreateEventState extends State<CreateEvent> {
 
     String title = 'Reminder Title';
     String body = 'Reminder Body';
-    }
+  }
 
   String? _imagePath;
+
+
+
+
   Future<void> _openImagePicker() async {
     final pickedImage = await picker.getImage(source: ImageSource.gallery);
 
@@ -55,6 +60,10 @@ class _CreateEventState extends State<CreateEvent> {
       });
     }
   }
+
+
+
+
 
   MyTime? selectedReminderOption;
 
@@ -100,12 +109,20 @@ class _CreateEventState extends State<CreateEvent> {
       addressController.text = widget.argument!.eventModel.address;
       locationController.text = widget.argument!.eventModel.location;
     }
+    
     super.initState();
   }
-  // void setReminder() async {
-  //   DateTime scheduleTime =
-  //       DateTime.now().subtract(Duration(minutes: Duration.minutesPerHour));
-  // }
+
+   Future<void> _updateImagePicker() async {
+    final pickedImage = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      setState(() {
+        _pickedImagePath = pickedImage.path;
+        image = File(_pickedImagePath!);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,264 +138,331 @@ class _CreateEventState extends State<CreateEvent> {
                 ),
               )
             : Column(
-          children: [
-            Container(
-              height: 70,
-              child: Stack(
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(0),
-                        topRight: Radius.circular(0),
-                        bottomLeft: Radius.circular(250),
-                        bottomRight: Radius.circular(250),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 15,
-                    right: 120,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.purple,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        " Event Details",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 10,
-                    top: 10,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, MyRoutes.addRoute);
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios_new_outlined,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(8),
-                        primary: Colors.purple,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.only(left: 40, right: 40),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    height: 70,
+                    child: Stack(
                       children: [
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.04),
-                        const Text(
-                          "Enter Event Details",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            height: 1,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: "Event Name:"),
-                          controller: eventController,
-                          validator: (value) {
-                            if (value!.isEmpty ||
-                                !RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
-                              return "Enter Event Name";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
-                        TextFormField(
-                          decoration: const InputDecoration(labelText: "Name:"),
-                          controller: nameController,
-                          validator: (value) {
-                            if (value!.isEmpty ||
-                                !RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
-                              return "Enter Name";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
-                        buildDateTimePicker(),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
-                        DropdownButtonFormField<MyTime>(
-                          value: selectedReminderOption,
-                          onChanged: (MyTime? newValue) {
-                            setState(() {
-                              selectedReminderOption = newValue!;
-                            });
-                             
-
-                            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            //   content: Text('Reminder set for ${newValue?.label}'),
-                            // ));
-                          },
-                          items: reminderOptions.map((MyTime option) {
-                            return DropdownMenuItem<MyTime>(
-                              value: option,
-                              child: Text(option.label),
-                            );
-                          }).toList(),
-                          decoration: const InputDecoration(
-                            labelText: 'Reminder',
-                          ),
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please select a reminder option';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: "Address:"),
-                          controller: addressController,
-                          validator: (value) {
-                            if (value!.isEmpty ||
-                                !RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
-                              return "Enter Address";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: "Location:"),
-                          controller: locationController,
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
-                        Row(
-                          children: [
-                            const SizedBox(
-                              height: 10,
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: const BoxDecoration(
+                            color: Colors.purple,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(0),
+                              topRight: Radius.circular(0),
+                              bottomLeft: Radius.circular(250),
+                              bottomRight: Radius.circular(250),
                             ),
-                            if (_pickedImagePath != null) ...[
-                              const SizedBox(height: 15, width: 69),
-                              Image.file(
-                                File(_pickedImagePath!),
-                                width: MediaQuery.of(context).size.width / 2,
-                                height: MediaQuery.of(context).size.height / 2,
-                              ),
-                            ],
-                          ],
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              _openImagePicker();
-                            },
-                            icon: const Icon(Icons.image),
-                            label: const Text('Upload Image'),
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.center,
+                        Positioned(
+                          top: 15,
+                          right: 120,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 5),
+                            decoration: BoxDecoration(
+                              color: Colors.purple,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Text(
+                              " Event Details",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: 10,
+                          top: 10,
                           child: ElevatedButton(
-                            
                             onPressed: () {
-
-                              if (selectedReminderOption == null) {
-                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                              content: Text('Please Select Reminder Option'),
-                            ));
-                                
-                                return;
-                              }
-
-                                final duration = Duration(
-                                  minutes: selectedReminderOption!.type == 'minute' ? selectedReminderOption!.duration : 0,
-                                  hours: selectedReminderOption!.type == 'hour' ? selectedReminderOption!.duration : 0,
-                                  days: selectedReminderOption!.type == 'day' ? selectedReminderOption!.duration : 0
-                                );
-
-                                if (image == null) {
-                                  showSnackBar(context, "Please select Event photo");
-                                  return;
-                                }
-
-                                if (selectedReminderOption == null) {
-                                  showSnackBar(context, "Please select remainder");
-                                  return;
-                                }
-
-                                if (!fromTime.isAfter(DateTime.now())) {
-                                  showSnackBar(context, "From time must be greater than current time");
-                                  return;
-                                }
-
-                                if (!toTime.isAfter(fromTime)) {
-                                  showSnackBar(context, "To time must greater than  from time");
-                                  return;
-                                }
-
-                                if (!fromTime.subtract(duration).isAfter(DateTime.now())) {
-                                  showSnackBar(context, "Select other remainder option");
-                                  return;
-                                }
-                                
-                              
-                                 NotificationApi.showScheduledNotification(id: Random().nextInt(10000), scheduleTime: fromTime.subtract(duration
-                                  ), title: 'Event Reminder', body: 'Personally arranged event notification');
-                              //  NotificationApi.showScheduledNotification(scheduleTime: fromTime.subtract(Duration(minutes: 1)), title: 'Event Reminder', body: 'You have A Upcoming Event'); 
-                                // NotificationApi.showScheduledNotification(scheduleTime: DateTime.now().add(Duration(minutes: 1)), title: 'Event Reminder', body: 'You have A Upcoming Event');
-                              // NotificationApi.showNotification(id: 123, title: 'Testing', body: 'Test');
-                              // notificationApi.sendNotification("Some Name",
-                              //      "Your invitation has been created ");
-                              // if (formKey.currentState!.validate()) {
-                                // Validated successfully, continue with form submission\
-                                
-                                storeEventDataToFireStore();
-                              // }
+                              Navigator.pushNamed(context, MyRoutes.addRoute);
                             },
-                            
-                            child: const Text("Submit"),
+                            child: const Icon(
+                              Icons.arrow_back_ios_new_outlined,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              shape: CircleBorder(),
+                              padding: EdgeInsets.all(8),
+                              primary: Colors.purple,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 40, right: 40),
+                        child: Form(
+                          key: formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.04),
+                              const Text(
+                                "Enter Event Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  height: 1,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.05),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                    labelText: "Event Name:"),
+                                controller: eventController,
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      !RegExp(r'^[a-zA-Z ]+$')
+                                          .hasMatch(value)) {
+                                    return "Enter Event Name";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.05),
+                              TextFormField(
+                                decoration:
+                                    const InputDecoration(labelText: "Name:"),
+                                controller: nameController,
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      !RegExp(r'^[a-zA-Z ]+$')
+                                          .hasMatch(value)) {
+                                    return "Enter Name";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.05),
+                              buildDateTimePicker(),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.05),
+                              DropdownButtonFormField<MyTime>(
+                                value: selectedReminderOption,
+                                onChanged: (MyTime? newValue) {
+                                  setState(() {
+                                    selectedReminderOption = newValue!;
+                                  });
+                                },
+                                items: reminderOptions.map((MyTime option) {
+                                  return DropdownMenuItem<MyTime>(
+                                    value: option,
+                                    child: Text(option.label),
+                                  );
+                                }).toList(),
+                                decoration: const InputDecoration(
+                                  labelText: 'Reminder',
+                                ),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please select a reminder option';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.05),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                    labelText: "Address:"),
+                                controller: addressController,
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      !RegExp(r'^[a-zA-Z ]+$')
+                                          .hasMatch(value)) {
+                                    return "Enter Address";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.05,
+                              ),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: "Location:",
+                                  hintText: "Copy address link from google maps here (optional)",
+                                ),
+                                controller: locationController,
+                                // validator: (value) {
+                                //   if (value!.isEmpty ||
+                                //       !RegExp(r'^[a-zA-Z ]+$')
+                                //           .hasMatch(value)) {
+                                //     return "Enter Address";
+                                //   }
+                                //   return null;
+                                // },
+                              ),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.05),
+                              Row(
+                                children: [
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  if (_pickedImagePath != null) ...[
+                                    const SizedBox(height: 15, width: 69),
+                                    Image.file(
+                                      File(_pickedImagePath!),
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              2,
+                                    ),
+                                  ],
+                                ],
+                              ),
+
+
+
+
+
+                              Container(
+                                alignment: Alignment.center,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    _openImagePicker();
+                                  },
+                                  icon: const Icon(Icons.image),
+                                  label: const Text('Upload Image'),
+                                ),
+                              ),
+
+
+
+
+                              Container(
+                                alignment: Alignment.center,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: _isSubmitting
+                                      ? CircularProgressIndicator(
+                                          color: Colors.purple,
+                                          
+                                        )
+                                      : ElevatedButton(
+                                          onPressed: () async {
+                                            if (_isSubmitting) return;
+
+                                            setState(() {
+                                              _isSubmitting = true;
+                                            });
+                                            if (selectedReminderOption ==
+                                                null) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    'Please Select Reminder Option'),
+                                              ));
+
+                                              return;
+                                            }
+
+                                            final duration = Duration(
+                                                minutes: selectedReminderOption!
+                                                            .type ==
+                                                        'minute'
+                                                    ? selectedReminderOption!
+                                                        .duration
+                                                    : 0,
+                                                hours: selectedReminderOption!
+                                                            .type ==
+                                                        'hour'
+                                                    ? selectedReminderOption!
+                                                        .duration
+                                                    : 0,
+                                                days: selectedReminderOption!
+                                                            .type ==
+                                                        'day'
+                                                    ? selectedReminderOption!
+                                                        .duration
+                                                    : 0);
+
+                                            if (image == null) {
+                                              showSnackBar(context,
+                                                  "Please select Event photo");
+                                              return;
+                                            }
+
+                                            if (selectedReminderOption ==
+                                                null) {
+                                              showSnackBar(context,
+                                                  "Please select remainder");
+                                              return;
+                                            }
+
+                                            if (!fromTime
+                                                .isAfter(DateTime.now())) {
+                                              showSnackBar(context,
+                                                  "From time must be greater than current time");
+                                              return;
+                                            }
+
+                                            if (!toTime.isAfter(fromTime)) {
+                                              showSnackBar(context,
+                                                  "To time must greater than  from time");
+                                              return;
+                                            }
+
+                                            if (!fromTime
+                                                .subtract(duration)
+                                                .isAfter(DateTime.now())) {
+                                              showSnackBar(context,
+                                                  "Select other remainder option");
+                                              return;
+                                            }
+
+                                            NotificationApi
+                                                .showScheduledNotification(
+                                                    id: Random().nextInt(10000),
+                                                    scheduleTime: fromTime
+                                                        .subtract(duration),
+                                                    title: 'Event Reminder',
+                                                    body:
+                                                        'Personally arranged event notification');
+
+                                            storeEventDataToFireStore();
+                                            
+                                            setState(() {
+                                              _isSubmitting = false;
+                                            });
+                                          },
+                                          child: const Text("Submit"),
+                                        ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -410,7 +494,7 @@ class _CreateEventState extends State<CreateEvent> {
     required bool pickDate,
   }) async {
     final date = await pickDateTime(fromTime,
-     pickDate: pickDate,firstDate: pickDate ? fromTime : null);
+        pickDate: pickDate, firstDate: pickDate ? fromTime : null);
     if (date == null) return;
 
     if (date.isAfter(toTime)) {
@@ -423,6 +507,10 @@ class _CreateEventState extends State<CreateEvent> {
     });
   }
 
+  
+
+
+
   Future pickToDateTime({
     required bool pickDate,
   }) async {
@@ -430,7 +518,7 @@ class _CreateEventState extends State<CreateEvent> {
         pickDate: pickDate, firstDate: pickDate ? fromTime : null);
     if (date == null) return;
 
-     if (date.isAfter(toTime)) {
+    if (date.isAfter(toTime)) {
       toTime =
           DateTime(date.year, date.month, date.day, toTime.hour, toTime.minute);
     }
@@ -525,48 +613,45 @@ class _CreateEventState extends State<CreateEvent> {
       toTime: Timestamp.fromDate(toTime),
       address: addressController.text.trim(),
       joinedUser: [],
-      duration: selectedReminderOption?.duration ?? 0, 
+      duration: selectedReminderOption?.duration ?? 0,
       durationType: selectedReminderOption?.type ?? '',
     );
 
     ap.saveEventDataToFirebase(
-        context: context,
-        documentId: widget.argument?.documentId,
-        eventModel: eventModel,
-        eventPic: image!,
-        onSuccess: (documentId) {
-          if (selectedReminderOption != null) {
-            final date = fromTime.subtract(
-              Duration(
-                minutes: selectedReminderOption!.type == 'minute' 
-                  ? selectedReminderOption!.duration 
+      context: context,
+      documentId: widget.argument?.documentId,
+      eventModel: eventModel,
+      eventPic: image!,
+      onSuccess: (documentId) {
+        if (selectedReminderOption != null) {
+          final date = fromTime.subtract(Duration(
+              minutes: selectedReminderOption!.type == 'minute'
+                  ? selectedReminderOption!.duration
                   : 0,
-               hours: selectedReminderOption!.type == 'hour' 
-                  ? selectedReminderOption!.duration 
+              hours: selectedReminderOption!.type == 'hour'
+                  ? selectedReminderOption!.duration
                   : 0,
-                days: selectedReminderOption!.type == 'day' 
-                  ? selectedReminderOption!.duration 
-                  : 0
-              )
-            );
-          }
-          showSnackBar(context, "Succesfully Created");
+              days: selectedReminderOption!.type == 'day'
+                  ? selectedReminderOption!.duration
+                  : 0));
+        }
+        showSnackBar(context, "Succesfully Created");
 
-          Navigator.pushReplacementNamed(context, MyRoutes.cardRoute,
-              arguments: documentId);
-        },
-      );
+        Navigator.pushReplacementNamed(context, MyRoutes.cardRoute,
+            arguments: documentId);
+      },
+    );
   }
 }
 
 List<String> reminderOptions1 = [
-      '5 minutes before',
-      '15 minutes before',
-      '30 minutes before',
-      '1 hour before',
-      '2 hour before',
-      '1 day before',
-    ];
+  '5 minutes before',
+  '15 minutes before',
+  '30 minutes before',
+  '1 hour before',
+  '2 hour before',
+  '1 day before',
+];
 
 List<MyTime> reminderOptions = [
   MyTime(duration: 5, type: 'minute', label: '5 minutes before'),
@@ -582,5 +667,5 @@ class MyTime {
   final String type;
   final String label;
 
-  MyTime({ required this.duration, required this.type, required this.label });
+  MyTime({required this.duration, required this.type, required this.label});
 }

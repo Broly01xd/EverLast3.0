@@ -195,26 +195,11 @@ class _TodayPageState extends State<TodayPage> {
                                 documentIds.add(documentId);
                               }
                             }
-                            // if (eventModels.isEmpty) {
-                            //   return const Text(
-                            //       "No events found for selected date");
-                            // }
-
-
-
-
                             if (eventModels.isEmpty) {
                               return Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    // const Text(
-                                    //   "No events found for selected date",
-                                    //   style: TextStyle(
-                                    //     fontSize: 18,
-                                    //     fontWeight: FontWeight.bold,
-                                    //   ),
-                                    // ),
                                     const SizedBox(height: 5),
                                     Image.asset(
                                       'rout/images/sadu.png', // Adjust the image path
@@ -274,6 +259,7 @@ Widget _datePicker(void Function(DateTime) onDateChanged) {
       DateTimePicker(
         type: DateTimePickerType.Date,
         onDateChanged: onDateChanged,
+        
       ),
     ],
   );
@@ -290,7 +276,7 @@ class EventsTileShimmer extends StatelessWidget {
             width: 60,
             height: 60,
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color:  Colors.grey[300],
               borderRadius: BorderRadius.circular(10),
             ),
           ),
