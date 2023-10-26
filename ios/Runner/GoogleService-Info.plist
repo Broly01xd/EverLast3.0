@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>807956604340-r3t9qt4pva026st3cemfqvm2ca97n68s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.807956604340-r3t9qt4pva026st3cemfqvm2ca97n68s</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDbnJWPl6PM8hkz6OhG5uRZ-EZvouKMb-s</string>
+	<key>GCM_SENDER_ID</key>
+	<string>807956604340</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.everlast</string>
+	<key>PROJECT_ID</key>
+	<string>everlast-561c0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>everlast-561c0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:807956604340:ios:fe59576502a4c6d0437ee1</string>
+</dict>
+</plist>
