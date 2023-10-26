@@ -1,12 +1,12 @@
-import 'package:everlast/pages/user_details.dart'; // Import your UserInfromationScreen
-import 'package:everlast/utils/utils.dart'; // Import your utility functions
+import 'package:everlast/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
-
-import '../provider/auth_provider.dart';
-import '../widgets/custom_button.dart';
 import 'bottom_nav_pages.dart';
+import 'package:everlast/pages/provider/auth_provider.dart';
+import 'package:everlast/pages/user_details.dart';
+import 'package:everlast/pages/widgets/custom_button.dart';
+import 'package:everlast/utils/utils.dart';
 
 class OtpPage extends StatefulWidget {
   final String verificationId;
@@ -161,33 +161,7 @@ class _OtpPageState extends State<OtpPage> {
       verificationId: widget.verificationId,
       userOtp: userOtp,
       onSuccess: () {
-        // checking whether user exists in the db
-        ap.checkExistingUser().then(
-          (value) async {
-            if (value == true) {
-              // user exists in our app
-              ap.getDataFromFirestore().then(
-                    (value) => ap.saveUserDataToSP().then(
-                          (value) => ap.setSigIn().then(
-                                (value) => Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BotNavPage()),
-                                    (route) => false),
-                              ),
-                        ),
-                  );
-            } else {
-              // new user
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const UserInfromationScreen()),
-                  (route) => false);
-            }
-          },
-        );
+        Navigator.push(context, MaterialPageRoute(builder: (_) => Wrapper(user: ap.getCurrentUser(),)));
       },
     );
   }

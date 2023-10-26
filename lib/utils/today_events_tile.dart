@@ -18,15 +18,15 @@ class TodayEventsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(eventName + eventWho + imageAsset);
     return GestureDetector(
       onTap: onPressed,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 12.0),
         child: Container(
           padding: const EdgeInsets.all(16),
+          //event color
           decoration: BoxDecoration(
-            color: Colors.white,
+            color:Colors.white,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
@@ -37,15 +37,11 @@ class TodayEventsTile extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: Container(
-                        width: 48,
+                      child: FadeInImage(
+                        image: NetworkImage(imageAsset),
+                        placeholder: const AssetImage('rout/images/placeholder.jpeg'),
                         height: 48,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(imageAsset),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        width: 48,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -62,7 +58,7 @@ class TodayEventsTile extends StatelessWidget {
                           ),
                           Text(
                             eventWho,
-                            style: const TextStyle(fontSize:10),
+                            style: const TextStyle(fontSize: 10),
                             softWrap: false,
                             maxLines: 1,
                             overflow: TextOverflow.fade,
@@ -73,26 +69,25 @@ class TodayEventsTile extends StatelessWidget {
                   ],
                 ),
               ),
-
-              Container(
-                child: PopupMenuButton<String>(
-                  itemBuilder: (context) {
-                    return [
-                      const PopupMenuItem<String>(
-                        value: 'Cancel',
-                        child: Text('Cancel'),
-                      ),
-                    ];
-                  },
-                  onSelected: (value) {
-                    if (value == 'Cancel') {}
-                    {
-                      onCancelPressed();
-                    }
-                  },
-                  child: const Icon(Icons.more_horiz),
-                ),
-              ),
+              // Container(
+              //   child: PopupMenuButton<String>(
+              //     itemBuilder: (context) {
+              //       return [
+              //         const PopupMenuItem<String>(
+              //           value: 'Cancel',
+              //           child: Text('Cancel'),
+              //         ),
+              //       ];
+              //     },
+              //     onSelected: (value) {
+              //       if (value == 'Cancel') {}
+              //       {
+              //         onCancelPressed();
+              //       }
+              //     },
+                 
+              //   ),
+              // ),
             ],
           ),
         ),

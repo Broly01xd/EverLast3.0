@@ -11,3 +11,4 @@ class Event {
     required this.date,
   });
 }
+

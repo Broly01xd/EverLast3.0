@@ -1,11 +1,11 @@
 import 'package:everlast/pages/bottom_nav_pages.dart';
+import 'package:everlast/pages/provider/auth_provider.dart';
+import 'package:everlast/pages/widgets/custom_button.dart';
+import 'package:everlast/utils/dynamic_links.dart';
+import 'package:everlast/utils/routes.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../provider/auth_provider.dart';
-import '../utils/firebase_utils/dynamic_link.dart';
-import '../widgets/custom_button.dart';
 import 'gen_OTP.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -72,23 +72,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 height: 50,
                 child: CustomButton(
                   onPressed: () async {
-                    if (ap.isSignedIn == true) {
-                      await ap.getDataFromSP().whenComplete(
-                            () => Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const BotNavPage(),
-                                ),
-                                (route) => false),
-                          );
-                    } else {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Genotp(),
-                        ),
-                      );
-                    }
+                    Navigator.pushNamed(context, MyRoutes.genotpRoute);
                   },
                   // when true fetch shared pred data
                   text: "Get Started",

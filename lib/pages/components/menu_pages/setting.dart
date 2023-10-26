@@ -1,7 +1,6 @@
 import 'package:everlast/pages/components/menu_pages/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
 import '../profile_menu.dart';
 
 class settingPage extends StatefulWidget {
@@ -52,10 +51,6 @@ class _settingPageState extends State<settingPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Text(
-            //   'App Version:',
-            //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            // ),
             const SizedBox(height: 8),
             ProfileMenu(
               icon: "rout/images/settings-svgrepo-com.svg",

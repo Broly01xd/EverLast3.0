@@ -1,11 +1,10 @@
 import 'dart:io';
-
 import 'package:everlast/model/user_model.dart';
+import 'package:everlast/pages/provider/auth_provider.dart';
+import 'package:everlast/pages/user_details.dart';
 import 'package:everlast/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../provider/auth_provider.dart';
 
 class MyAccountPage extends StatefulWidget {
   const MyAccountPage({super.key});
@@ -37,7 +36,9 @@ class _MyAccountPageState extends State<MyAccountPage> {
     final ap = Provider.of<AuthProvider>(context, listen: false);
     String uname = ap.userModel.name;
     String email = ap.userModel.email;
-    return Scaffold(
+    return MultiProvider(providers: [
+      Provider<AuthProvider>(create: (_) => AuthProvider()),
+    ], child: Scaffold(
       appBar: AppBar(
         title: const Text(
           'My Account',
@@ -47,7 +48,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
           ),
         ),
         centerTitle: true,
-        elevation: 0, // Remove elevation for a flat app bar
+        // elevation: 0, // Remove elevation for a flat app bar
       ),
       backgroundColor: Colors.grey[100], // Light background color
       body: SafeArea(
@@ -91,7 +92,10 @@ class _MyAccountPageState extends State<MyAccountPage> {
               ElevatedButton.icon(
                 onPressed: () {
                   storeData();
-                  Navigator.pushNamed(context, '/Userdetails');
+                  // Navigator.pushNamed(context, '/Userdetails');
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => UserInfromationScreen(
+                    userModel: ap.userModel,
+                  )));
                 },
                 icon: const Icon(Icons.edit, color: Colors.white),
                 label: const Text(
@@ -110,7 +114,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
           ),
         ),
       ),
-    );
+    ),);
   }
 
   void storeData() async {

@@ -1,15 +1,16 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everlast/pages/add.dart';
+import 'package:everlast/pages/provider/auth_provider.dart';
+import 'package:everlast/utils/api/notification_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-import '../api/notification_api.dart';
 import '../model/event_model.dart';
-import '../provider/auth_provider.dart';
 import 'bottom_nav_pages.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CardPage extends StatefulWidget {
   final String documentId;
@@ -209,13 +210,34 @@ class _CardPageState extends State<CardPage> {
                             right: 20,
                           ),
                           child: Center(
-                            child: Text(
-                              eventModel.location,
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w500,
-                                color: color2,
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  eventModel.address,
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w500,
+                                    color: color2,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                GestureDetector(
+                                  onTap: () {
+                                    _launchGoogleMaps(eventModel
+                                        .location); // Replace with the actual location URL
+                                  },
+                                  child: Text(
+                                    "Open in Google Maps", // Display text for the link
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),
@@ -469,8 +491,7 @@ class _CardPageState extends State<CardPage> {
                             days: durationType == 'day' ? duration : 0);
 
                         NotificationApi.showScheduledNotification(
-
-                            // Random().nextInt(10),
+                            id: Random().nextInt(10000),
                             scheduleTime: time.subtract(beforeTime),
                             title: 'Event Reminder',
                             body: eventName + " by " + createrName);
@@ -578,6 +599,14 @@ class _CardPageState extends State<CardPage> {
     } catch (e) {
       print('Error getting image URL: $e');
       return '';
+    }
+  }
+
+  Future<void> _launchGoogleMaps(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 }

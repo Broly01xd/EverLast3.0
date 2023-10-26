@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String name;
   String email;
@@ -38,4 +40,6 @@ class UserModel {
       "uid": uid,
     };
   }
+
+  static fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> e) {}
 }

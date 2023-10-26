@@ -59,7 +59,7 @@ class EventModel {
       fromTime: (data?['FromTime'] as Timestamp?) ??
           Timestamp.fromDate(DateTime(2023)),
       toTime:
-      (data?['ToTime'] as Timestamp?) ?? Timestamp.fromDate(DateTime(2023)),
+          (data?['ToTime'] as Timestamp?) ?? Timestamp.fromDate(DateTime(2023)),
       address: data?['Address'] ?? '',
       location: data?['Location'] ?? '',
       eventPic: data?['EventPic'] ?? '',

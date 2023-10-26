@@ -1,6 +1,8 @@
 // import 'package:everlast/api/notification_api.dart';
-import 'package:everlast/provider/auth_provider.dart';
+import 'package:everlast/pages/provider/auth_provider.dart';
 import 'package:everlast/utils/routes.dart';
+import 'package:everlast/wrapper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter/material.dart';
@@ -35,7 +37,19 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: MyRoutes.wrapperRoute,
+        // initialRoute: MyRoutes.wrapperRoute,
+        home: StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+
+                final user = snapshot.data;
+                return Wrapper(user: user,);
+              },
+            ),
         onGenerateRoute: MyRoutes.generateRoute,
       ),
     );

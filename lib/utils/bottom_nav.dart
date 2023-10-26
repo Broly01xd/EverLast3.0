@@ -1,46 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
 
   const BottomNavigationBarWidget({
-    super.key,
+    Key? key,
     required this.currentIndex,
     required this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SalomonBottomBar(
-      currentIndex: currentIndex,
+    return CurvedNavigationBar(
+      index: currentIndex,
       onTap: onTap,
-      items: [
-        SalomonBottomBarItem(
-          icon: const Icon(Icons.today),
-          title: const Text("Today"),
-          selectedColor: Colors.purple,
+      backgroundColor:
+          Colors.transparent, // You can set the desired background color here
+      color: Colors.purple, // The active item's color
+      buttonBackgroundColor:
+          Colors.purple, // The background color of the center button
+      height: 45, // Adjust the height as per your requirement
+      items: const [
+        Icon(
+          Icons.today,
+          size: 25,
+          color: Colors.white,
         ),
-        SalomonBottomBarItem(
-          icon: const Icon(Icons.history),
-          title: const Text("History"),
-          selectedColor: Colors.pink,
+        Icon(
+          Icons.history,
+          size: 25,
+          color: Colors.white,
         ),
-        SalomonBottomBarItem(
-          icon: const Icon(Icons.add),
-          title: const Text("Add"),
-          selectedColor: Colors.pink,
+        Icon(
+          Icons.add,
+          size: 25,
+          color: Colors.white,
         ),
-        SalomonBottomBarItem(
-          icon: const Icon(Icons.event_available),
-          title: const Text("Events"),
-          selectedColor: Colors.orange,
+        Icon(
+          Icons.event_available,
+          size: 25,
+          color: Colors.white,
         ),
-        SalomonBottomBarItem(
-          icon: const Icon(Icons.person),
-          title: const Text("Profile"),
-          selectedColor: Colors.teal,
+        Icon(
+          Icons.person,
+          size: 25,
+          color: Colors.white,
         ),
       ],
     );

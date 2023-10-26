@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
 import '../profile_menu.dart';
 
 class HelpPage extends StatefulWidget {
@@ -55,7 +54,7 @@ class _HelpPageState extends State<HelpPage> {
             //   'App Version:',
             //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             // ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             ProfileMenu(
               icon: "rout/images/settings-svgrepo-com.svg",
               text: "App Version",
@@ -79,13 +78,13 @@ class AppVersionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('App Version'),
+        title: const Text('App Version'),
         backgroundColor: Colors.purple,
       ),
       body: Center(
         child: Text(
           appVersion,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
     );

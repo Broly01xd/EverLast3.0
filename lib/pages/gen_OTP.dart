@@ -1,9 +1,8 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:everlast/pages/provider/auth_provider.dart';
+import 'package:everlast/pages/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../provider/auth_provider.dart';
-import '../widgets/custom_button.dart';
 
 class Genotp extends StatefulWidget {
   const Genotp({Key? key}) : super(key: key);
@@ -13,6 +12,7 @@ class Genotp extends StatefulWidget {
 }
 
 class _GenotpState extends State<Genotp> {
+  bool _isLoading = false;
   final TextEditingController phoneController = TextEditingController();
   Country selectedCountry = Country(
     phoneCode: "91",
@@ -29,6 +29,7 @@ class _GenotpState extends State<Genotp> {
 
   @override
   Widget build(BuildContext context) {
+    
     phoneController.selection = TextSelection.fromPosition(
       TextPosition(
         offset: phoneController.text.length,
@@ -42,6 +43,7 @@ class _GenotpState extends State<Genotp> {
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
               child: Column(
                 children: [
+
                   Container(
                     width: 200,
                     height: 200,
@@ -148,13 +150,19 @@ class _GenotpState extends State<Genotp> {
                     ),
                   ),
                   //login button
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: CustomButton(
-                      text: "Login",
-                      onPressed: () => sendPhoneNumber(),
+                   const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.purple,
+                        ),
+                      )
+                    : CustomButton(
+                        text: "Login",
+                        onPressed: () => sendPhoneNumber(),
                     ),
                   ),
                 ],
@@ -166,9 +174,20 @@ class _GenotpState extends State<Genotp> {
     );
   }
 
-  void sendPhoneNumber() {
-    final ap = Provider.of<AuthProvider>(context, listen: false);
-    String phoneNumber = phoneController.text.trim();
-    ap.signInwithPhone(context, "+${selectedCountry.phoneCode}$phoneNumber");
-  }
+   void sendPhoneNumber() {
+  final ap = Provider.of<AuthProvider>(context, listen: false);
+  String phoneNumber = phoneController.text.trim();
+
+  setState(() {
+    _isLoading = true; // Show loading indicator
+  });
+
+  ap.signInwithPhone(context, "+${selectedCountry.phoneCode}$phoneNumber", () {
+    setState(() {
+      _isLoading = false; // Hide loading indicator
+    });
+  });
+}
+
+
 }

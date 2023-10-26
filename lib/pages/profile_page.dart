@@ -1,12 +1,12 @@
+import 'package:everlast/pages/components/menu_pages/setting.dart';
 import 'package:everlast/pages/components/profile_menu.dart';
-import 'package:everlast/pages/my_account.dart';
+import 'package:everlast/pages/gen_OTP.dart';
+import 'package:everlast/pages/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:everlast/pages/my_account.dart';
 import 'package:provider/provider.dart';
-
-import '../provider/auth_provider.dart';
 import 'WelcomeScreen.dart';
 import 'components/menu_pages/help.dart';
-import 'components/menu_pages/setting.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -28,10 +28,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 final ap = Provider.of<AuthProvider>(context, listen: false);
                 await ap.userSignOut();
                 // Navigator.of(context).pop();
+
+                if (!mounted){
+                  return;
+                }
+                
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const WelcomeScreen()),
+                        builder: (context) => const Genotp()),
                     (route) => false);
               },
               child: const Text('Log Out'),
@@ -63,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(
               height: MediaQuery.of(context).size.height / 14,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -129,7 +134,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 },
                               ),
                               //App Setting
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               ProfileMenu(
                                   icon: "rout/images/settings-svgrepo-com.svg",
                                   text: "Settings",
@@ -137,12 +142,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => settingPage(),
+                                        builder: (context) =>
+                                            const settingPage(),
                                       ),
                                     );
                                   }),
                               //Help
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               ProfileMenu(
                                 icon: "rout/images/help-svgrepo-com.svg",
                                 text: "Help",
@@ -150,13 +156,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HelpPage(),
+                                      builder: (context) => const HelpPage(),
                                     ),
                                   );
                                 },
                               ),
                               //LogOut
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               ProfileMenu(
                                 icon: "rout/images/log-out-svgrepo-com.svg",
                                 text: "Log Out",

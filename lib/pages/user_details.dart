@@ -1,16 +1,16 @@
 import 'dart:io';
-
+import 'package:everlast/pages/provider/auth_provider.dart';
+import 'package:everlast/pages/widgets/custom_button.dart';
+import 'package:everlast/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../model/user_model.dart';
 import '../pages/bottom_nav_pages.dart';
-import '../provider/auth_provider.dart';
 import '../utils/utils.dart';
-import '../widgets/custom_button.dart';
 
 class UserInfromationScreen extends StatefulWidget {
-  const UserInfromationScreen({super.key});
+  final UserModel? userModel;
+  const UserInfromationScreen({super.key, this.userModel});
   @override
   State<UserInfromationScreen> createState() => _UserInfromationScreenState();
 }
@@ -19,36 +19,41 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   File? image;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
-  // final bioController = TextEditingController();
+  String imageUrl = '';
 
   @override
   void dispose() {
     super.dispose();
     nameController.dispose();
     emailController.dispose();
-    // bioController.dispose();
   }
 
   // for selecting image
   void selectImage() async {
     image = await pickImage(context);
-    print("uncle ji photo");
     setState(() {});
   }
 
   @override
+  void initState() {
+    
+    if (widget.userModel != null) {
+       nameController.text = widget.userModel!.name;
+       emailController.text = widget.userModel!.email;
+       imageUrl = widget.userModel!.profileImage;
+    }
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final ap = Provider.of<AuthProvider>(context, listen: false);
-    String uname = ap.userModel.name;
-    String email = ap.userModel.email;
-    nameController.text = uname;
-    emailController.text = email;
     final isLoading =
         Provider.of<AuthProvider>(context, listen: true).isLoading;
     var _formKey;
     return Scaffold(
       body: SafeArea(
-        child: isLoading == true
+        child: isLoading
             ? const Center(
                 child: CircularProgressIndicator(
                   color: Colors.purple,
@@ -67,7 +72,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                           backgroundImage: (image != null
                               ? FileImage(image!)
                               : NetworkImage(
-                                  ap.userModel.profileImage,
+                                  imageUrl,
                                 )) as ImageProvider<Object>?,
                           radius: 50,
                         ),
@@ -86,7 +91,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                   // name field
 
                                   TextField(
-                                    hintText: "$uname",
+                                    hintText: "Enter your name",
                                     icon: Icons.account_circle,
                                     inputType: TextInputType.name,
                                     maxLines: 1,
@@ -96,7 +101,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                   // email
 
                                   TextField(
-                                    hintText: '$email',
+                                    hintText: 'Enter your email',
                                     icon: Icons.email,
                                     inputType: TextInputType.emailAddress,
                                     maxLines: 1,
@@ -108,15 +113,38 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         height: 50,
                         width: MediaQuery.of(context).size.width * 0.90,
                         child: CustomButton(
                           text: "Continue",
-                          onPressed: () {
-                            storeData();
-                            Navigator.pushNamed(context, '/BotNavPage');
+                          onPressed: () async {
+                            final ap = Provider.of<AuthProvider>(context, listen: false);
+                            UserModel userModel = UserModel(
+                              name: nameController.text.trim(),
+                              email: emailController.text.trim(),
+                              profileImage: widget.userModel?.profileImage ?? '',
+                              createdAt: '',
+                              phone: '',
+                              uid: '',
+                            );
+                            if (image != null || userModel.profileImage.isNotEmpty) {
+                              await ap.saveUserDataToFirebase(
+                                  context: context,
+                                  userModel: userModel,
+                                  profilePic: image,
+                                  onSuccess: () {
+                                    Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BotNavPage(index: 0)),
+                              );
+                                  });
+                              
+                            } else {
+                              showSnackBar(context, "Please upload your profile photo");
+                            }
                           },
                         ),
                       )
@@ -178,36 +206,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   }
 
   //store user data to database
-  void storeData() async {
-    final ap = Provider.of<AuthProvider>(context, listen: false);
-    UserModel userModel = UserModel(
-      name: nameController.text.trim(),
-      email: emailController.text.trim(),
-      profileImage: "",
-      createdAt: '',
-      phone: '',
-      uid: '',
-    );
-    if (image != "") {
-      ap.saveUserDataToFirebase(
-          context: context,
-          userModel: userModel,
-          profilePic: image!,
-          onSuccess: () {
-            //once data is saved we need to store it locally
-            ap.saveUserDataToSP().then(
-                  (value) => ap.setSigIn().then(
-                        (value) => Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BotNavPage(),
-                            ),
-                            (route) => false),
-                      ),
-                );
-          });
-    } else {
-      showSnackBar(context, "Please upload your profile photo");
-    }
+  Future<void> storeData() async {
+    
   }
 }

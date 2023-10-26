@@ -1,7 +1,6 @@
+import 'package:everlast/utils/dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-
-import 'firebase_utils/dynamic_link.dart';
 
 class EventsTile extends StatelessWidget {
   final String docId;
@@ -30,6 +29,7 @@ class EventsTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 12.0),
         child: Container(
+          //  width: 50,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -38,48 +38,46 @@ class EventsTile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
+              Container(
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child:FadeInImage(
                           image: NetworkImage(imageAsset),
-                          fit: BoxFit.cover,
+                          placeholder: const AssetImage('rout/images/placeholder.jpeg'),
+                          height: 48,
+                          width: 48,
                         ),
+                    ),
+                    const SizedBox(width: 12),
+                    Container(
+                      // width: MediaQuery.of(context).size.width / 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            eventName,
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            eventWho,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          eventName,
-                          style: const TextStyle(
-                            fontSize: 18,
-                          ),
-                          maxLines: 1,
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          eventWho,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Row(
                 children: [

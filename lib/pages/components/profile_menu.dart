@@ -13,7 +13,7 @@ class ProfileMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: TextButton(
           style: TextButton.styleFrom(
               backgroundColor: Colors.grey[200],
@@ -35,7 +35,7 @@ class ProfileMenu extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                 ),
               ),
               const Icon(

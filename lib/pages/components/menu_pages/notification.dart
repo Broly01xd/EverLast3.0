@@ -21,19 +21,19 @@ class _NotificationPageState extends State<NotificationPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
-        title: Text('Notification Settings'),
+        title: const Text('Notification Settings'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Enable Notifications',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SwitchListTile(
-              title: Text('Enable'),
+              title: const Text('Enable'),
               value: _isNotificationEnabled,
               onChanged: _toggleNotification,
             ),

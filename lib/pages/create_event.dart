@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:everlast/arguments/card_page_arguments.dart';
 import 'package:everlast/model/event_model.dart';
+import 'package:everlast/pages/provider/auth_provider.dart';
 import 'package:everlast/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
-import '../api/notification_api.dart';
-import '../arguments/card_page_argument.dart';
-import '../provider/auth_provider.dart';
+import '../utils/api/notification_api.dart';
 import '../utils/utils.dart';
 
 class CreateEvent extends StatefulWidget {
@@ -47,6 +46,10 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   String? _imagePath;
+
+
+
+
   Future<void> _openImagePicker() async {
     final pickedImage = await picker.getImage(source: ImageSource.gallery);
 
@@ -58,7 +61,12 @@ class _CreateEventState extends State<CreateEvent> {
     }
   }
 
+
+
+
+
   MyTime? selectedReminderOption;
+
   TimeOfDay? _fromTime;
   TimeOfDay? _toTime;
   void _selectFromTime() async {
@@ -90,36 +98,22 @@ class _CreateEventState extends State<CreateEvent> {
   void initState() {
     // notificationApi.initialisationNotification();
     NotificationApi.init();
-
     if (widget.argument == null) {
-      // New event creation
       fromTime = DateTime.now();
       toTime = DateTime.now();
     } else {
-      // Updating an existing event
-      final EventModel eventModel = widget.argument!.eventModel;
-      fromTime = eventModel.fromTime.toDate();
-      toTime = eventModel.toTime.toDate();
-      eventController.text = eventModel.eventName;
-      nameController.text = eventModel.name;
-      addressController.text = eventModel.address;
-      locationController.text = eventModel.location;
-
-      // Pre-select the reminder option
-      final selectedOption = reminderOptions.firstWhere(
-        (option) => option.label == eventModel.reminder,
-        orElse: () => MyTime(
-            duration: 0, type: '', label: ''), // Provide a default option
-      );
-      setState(() {
-        selectedReminderOption = selectedOption;
-      });
+      fromTime = widget.argument!.eventModel.fromTime.toDate();
+      toTime = widget.argument!.eventModel.toTime.toDate();
+      eventController.text = widget.argument!.eventModel.eventName;
+      nameController.text = widget.argument!.eventModel.name;
+      addressController.text = widget.argument!.eventModel.address;
+      locationController.text = widget.argument!.eventModel.location;
     }
-
+    
     super.initState();
   }
 
-  Future<void> _updateImagePicker() async {
+   Future<void> _updateImagePicker() async {
     final pickedImage = await picker.getImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
@@ -309,8 +303,7 @@ class _CreateEventState extends State<CreateEvent> {
                               TextFormField(
                                 decoration: InputDecoration(
                                   labelText: "Location:",
-                                  hintText:
-                                      "Copy address link from google maps here (optional)",
+                                  hintText: "Copy address link from google maps here (optional)",
                                 ),
                                 controller: locationController,
                                 // validator: (value) {
@@ -341,20 +334,13 @@ class _CreateEventState extends State<CreateEvent> {
                                               2,
                                     ),
                                   ],
-                                  if (_pickedImagePath == null &&
-                                      widget.argument != null) ...[
-                                    const SizedBox(height: 15, width: 69),
-                                    Image.network(
-                                      widget.argument!.eventModel.eventPic,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              2,
-                                    ),
-                                  ],
                                 ],
                               ),
+
+
+
+
+
                               Container(
                                 alignment: Alignment.center,
                                 child: ElevatedButton.icon(
@@ -365,6 +351,10 @@ class _CreateEventState extends State<CreateEvent> {
                                   label: const Text('Upload Image'),
                                 ),
                               ),
+
+
+
+
                               Container(
                                 alignment: Alignment.center,
                                 child: Container(
@@ -372,6 +362,7 @@ class _CreateEventState extends State<CreateEvent> {
                                   child: _isSubmitting
                                       ? CircularProgressIndicator(
                                           color: Colors.purple,
+                                          
                                         )
                                       : ElevatedButton(
                                           onPressed: () async {
@@ -455,7 +446,7 @@ class _CreateEventState extends State<CreateEvent> {
                                                         'Personally arranged event notification');
 
                                             storeEventDataToFireStore();
-
+                                            
                                             setState(() {
                                               _isSubmitting = false;
                                             });
@@ -510,10 +501,15 @@ class _CreateEventState extends State<CreateEvent> {
       toTime =
           DateTime(date.year, date.month, date.day, toTime.hour, toTime.minute);
     }
+
     setState(() {
       fromTime = date;
     });
   }
+
+  
+
+
 
   Future pickToDateTime({
     required bool pickDate,
@@ -526,6 +522,7 @@ class _CreateEventState extends State<CreateEvent> {
       toTime =
           DateTime(date.year, date.month, date.day, toTime.hour, toTime.minute);
     }
+
     setState(() {
       toTime = date;
     });
@@ -549,10 +546,13 @@ class _CreateEventState extends State<CreateEvent> {
     } else {
       final timeOfDay = await showTimePicker(
           context: context, initialTime: TimeOfDay.fromDateTime(initialDate));
+
       if (timeOfDay == null) return null;
+
       final date =
           DateTime(initialDate.year, initialDate.month, initialDate.day);
       final time = Duration(hours: timeOfDay.hour, minutes: timeOfDay.minute);
+
       return date.add(time);
     }
   }
@@ -603,20 +603,18 @@ class _CreateEventState extends State<CreateEvent> {
   void storeEventDataToFireStore() async {
     final ap = Provider.of<AuthProvider>(context, listen: false);
     EventModel eventModel = EventModel(
-      id: '', // You can generate or obtain the ID as needed.
+      createdAt: 'empty',
+      id: '',
+      eventPic: 'empty pic',
       eventName: eventController.text.trim(),
-      eventPic: _pickedImagePath ??
-          '', // Use the selected image path or provide a default.
-      createdAt: '', // Set the creation timestamp as needed.
+      location: locationController.text.trim(),
       name: nameController.text.trim(),
       fromTime: Timestamp.fromDate(fromTime),
       toTime: Timestamp.fromDate(toTime),
       address: addressController.text.trim(),
-      location: locationController.text.trim(),
-      joinedUser: [], // Initially, there are no joined users.
+      joinedUser: [],
       duration: selectedReminderOption?.duration ?? 0,
       durationType: selectedReminderOption?.type ?? '',
-      reminder: selectedReminderOption?.label ?? '',
     );
 
     ap.saveEventDataToFirebase(
@@ -659,9 +657,9 @@ List<MyTime> reminderOptions = [
   MyTime(duration: 5, type: 'minute', label: '5 minutes before'),
   MyTime(duration: 15, type: 'minute', label: '15 minutes before'),
   MyTime(duration: 30, type: 'minute', label: '30 minutes before'),
-  MyTime(duration: 60, type: 'minute', label: '1 hour before'),
-  MyTime(duration: 120, type: 'minute', label: '2 hours before'),
-  MyTime(duration: 1440, type: 'minute', label: '1 day before'),
+  MyTime(duration: 1, type: 'hour', label: '1 hour before'),
+  MyTime(duration: 2, type: 'hour', label: '2 hour before'),
+  MyTime(duration: 1, type: 'day', label: '1 day before'),
 ];
 
 class MyTime {
