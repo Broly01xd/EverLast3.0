@@ -35,13 +35,15 @@ dependencies:
   line_awesome_flutter: ^2.0.0
   flutter_svg: ^2.0.5
   custom_pop_up_menu: ^1.2.4
-  flutter_date_pickers: ^0.4.2
-  flutter_date_picker_timeline: ^0.3.3
+#  flutter_date_pickers: ^0.4.2
+  flutter_date_picker_timeline: ^0.3.0
   date_picker_timeline: ^1.2.3
   image_picker: ^0.8.7+5
   package_info_plus: ^4.0.2
   share: ^2.0.4
   pinput: ^2.2.31
+  table_calendar: ^3.0.8
+  ticket_widget: ^0.0.1
   flutter:
     sdk: flutter
 
@@ -51,6 +53,23 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^4.0.4
   animated_bottom_navigation_bar: ^1.2.0
+  firebase_auth: ^4.6.2
+  firebase_core: ^2.13.1
+  country_picker: ^2.0.20
+  cloud_firestore: ^4.8.0
+  firebase_storage: ^11.2.2
+  shared_preferences: ^2.1.2
+  provider: ^6.0.5
+  firebase_dynamic_links: ^5.3.3
+  uuid: ^3.0.7
+  path_provider: ^2.0.15
+  share_plus: ^7.0.2
+  flutter_local_notifications: ^9.1.5
+  rxdart: ^0.27.7
+  flare_flutter: ^3.0.2
+  timezone: ^0.8.0
+#  date_time_picker_widget: ^1.0.1+4
+
 
 
 dev_dependencies:

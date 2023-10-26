@@ -1,129 +1,197 @@
-import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everlast/utils/add_events.dart';
+import 'package:everlast/utils/routes.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class AddPage extends StatelessWidget {
-  const AddPage({super.key});
+import '../arguments/card_page_argument.dart';
+import '../model/event_model.dart';
+import '../provider/auth_provider.dart';
+
+class AddPage extends StatefulWidget {
+  const AddPage({Key? key}) : super(key: key);
+
+  @override
+  _MyAddPageState createState() => _MyAddPageState();
+}
+
+class _MyAddPageState extends State<AddPage> {
+  String _message = '';
+  String? _uid;
+
+  @override
+  void initState() {
+    super.initState();
+    _message = 'Initialization complete';
+  }
 
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    _uid = ap.getCurrentUserUid();
+
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 190,
-            child: Stack(
+      body: Container(
+        width: double.infinity,
+        color: Colors.purple,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.purple,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(111),
-                      bottomRight: Radius.circular(111),
-                    ),
+                const Text(
+                  "Eventify",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                Positioned(
-                  top: 20,
-                  left: 5,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    decoration: BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      "Eventify",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                    bottom: 15,
-                    left: 50,
-                    right: 0,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, MyRoutes.createventRoute);
+                      },
+                      child: const Column(
                         children: [
                           Text(
-                            "Create New",
+                            'Create',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.purple,
                             ),
                           ),
-                          SizedBox(width: 5),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, "/create");
-                              // Add button onPressed logic here
-                              print('Add button pressed');
-                            },
-                            child: Text(
-                              '+',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.purple,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              padding: EdgeInsets.all(8),
-                              primary: Colors.white,
+                          Text(
+                            'New',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.purple,
                             ),
                           ),
                         ],
                       ),
-                    )),
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(15),
+                        primary: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-          ),
-          Container(
-            child: Expanded(
-              child: ListView(
-                children: const [
-                  EventsTile(
-                      icon: Icons.cake,
-                      eventName: 'Birthday Party',
-                      eventWho: '',
-                      eventDate: ''),
-                  // EventsTile(
-                  //   icon: Icons.man,
-                  //   eventName: 'Political speech',
-                  //   eventDate: '',
-                  //   eventWho: '',
-                  // ),
-                  // EventsTile(
-                  //   icon: Icons.book,
-                  //   eventName: 'Seminar',
-                  //   eventDate: ' ',
-                  //   eventWho: ' ',
-                  // ),
-                  // EventsTile(
-                  //   icon: Icons.business,
-                  //   eventName: 'Company meetings',
-                  //   eventDate: ' ',
-                  //   eventWho: ' ',
-                  // ),
-                  // EventsTile(
-                  //   icon: Icons.party_mode_sharp,
-                  //   eventName: 'Company party',
-                  //   eventDate: ' ',
-                  //   eventWho: ' ',
-                  // ),
-                ],
+            const SizedBox(
+              height: 5,
+            ),
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+                child: Container(
+                  color: Color.fromARGB(255, 239, 234, 240),
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('events')
+                        .where('id', isEqualTo: _uid)
+
+                        //  .where('joined_user', arrayContains: _uid)
+                        // .where('FromTime', isNotEqualTo: Timestamp.now())
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text('Loading...');
+                      }
+                      final data = snapshot.requireData;
+                      return ListView.builder(
+                        itemCount: data.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final eventModel =
+                              EventModel.fromFirestore(data.docs[index]);
+                          final documentId = data.docs[index].id;
+                          return EventsTile(
+                            docId: documentId,
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                MyRoutes.cardRoute,
+                                arguments: documentId,
+                              );
+                            },
+                            imageAsset: eventModel.eventPic,
+                            eventName: eventModel.eventName,
+                            eventWho: eventModel.name,
+                            onDeletePressed: () {
+                              _showDeleteConfirmationDialog(
+                                  context, documentId);
+                            },
+                            onUpdatePressed: () {
+                              // Perform update operation
+                              Navigator.pushNamed(
+                                context,
+                                MyRoutes.createventRoute,
+                                arguments: CardPageArgument(
+                                  documentId: documentId,
+                                  eventModel: eventModel,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context, String? eventId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Delete'),
+          content: const Text('Are you sure you want to delete this item?'),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                // Perform delete operation
+                if (eventId != null) {
+                  await FirebaseFirestore.instance
+                      .collection('events')
+                      .doc(eventId)
+                      .delete();
+                }
+                Navigator.of(context).pop();
+              },
+              child: const Text('Delete'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

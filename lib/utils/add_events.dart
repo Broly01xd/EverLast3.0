@@ -1,139 +1,129 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
+import 'firebase_utils/dynamic_link.dart';
+
 class EventsTile extends StatelessWidget {
-  final IconData icon;
+  final String docId;
+  final String imageAsset;
   final String eventName;
-  final String eventDate;
   final String eventWho;
+  final Function() onPressed;
+  final void Function() onDeletePressed;
+  final void Function() onUpdatePressed;
 
   const EventsTile({
     Key? key,
-    required this.icon,
+    required this.docId,
+    required this.imageAsset,
     required this.eventName,
-    required this.eventDate,
     required this.eventWho,
+    required this.onPressed,
+    required this.onDeletePressed,
+    required this.onUpdatePressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
-      child: Container(
-        padding: EdgeInsets.all(9),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(80),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(19),
-                  child: Container(
-                    padding: EdgeInsets.all(4),
-                    child: Icon(
-                      icon,
-                      color: Colors.white,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 12.0),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(imageAsset),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                    color: Color.fromARGB(255, 137, 35, 148),
                   ),
-                ),
-                SizedBox(width: 15),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      eventName,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15, height: 4),
+                  const SizedBox(width: 12),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          eventName,
+                          style: const TextStyle(
+                            fontSize: 18,
+                          ),
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          eventWho,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      eventDate,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Text(
-                      eventWho,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(width: 5),
-              ],
-            ),
-            Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.share_outlined),
-                  onPressed: () {
-                    Share.share(
-                        "https://play.google.com/store/apps/details?id=com.instructivetech.testapp");
-                  },
-                ),
-                PopupMenuButton<String>(
-                  itemBuilder: (context) {
-                    return [
-                      PopupMenuItem<String>(
-                        value: 'delete',
-                        child: Text('Delete'),
-                      ),
-                      PopupMenuItem<String>(
-                        value: 'update',
-                        child: Text('Update'),
-                      ),
-                    ];
-                  },
-                  onSelected: (value) {
-                    if (value == 'delete') {
-                      _showDeleteConfirmationDialog(context);
-                    } else if (value == 'update') {
-                      // Perform update operation
-                    }
-                  },
-                  child: Icon(Icons.more_horiz),
-                ),
-              ],
-            )
-          ],
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      // Handle share button pressed
+                      print("button pressed");
+                      DynamicLinkProvider()
+                          .createLink(docId, isShortLink: false)
+                          .then((value) {
+                        Share.share(value);
+                      });
+                      // Add your share functionality here
+                    },
+                    icon: const Icon(Icons.share),
+                  ),
+                  PopupMenuButton<String>(
+                    itemBuilder: (context) {
+                      return [
+                        const PopupMenuItem<String>(
+                          value: 'delete',
+                          child: Text('Delete'),
+                        ),
+                        const PopupMenuItem<String>(
+                          value: 'update',
+                          child: Text('Update'),
+                        ),
+                      ];
+                    },
+                    onSelected: (value) {
+                      if (value == 'delete') {
+                        onDeletePressed();
+                      } else if (value == 'update') {
+                        onUpdatePressed();
+                      }
+                    },
+                    child: const Icon(Icons.more_horiz),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-    );
-  }
-
-  void _showDeleteConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirm Delete'),
-          content: Text('Are you sure you want to delete this item?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Perform delete operation
-                Navigator.of(context).pop();
-              },
-              child: Text('Delete'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

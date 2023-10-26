@@ -1,14 +1,37 @@
-import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:everlast/pages/profile_page.dart';
+import 'package:everlast/utils/add_events.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../utils/today_events_tile.dart';
+import '../model/event_model.dart';
+import '../provider/auth_provider.dart';
+// import '../utils/today_events_tile.dart';
 
-class TodayPage extends StatelessWidget {
+class TodayPage extends StatefulWidget {
   const TodayPage({Key? key}) : super(key: key);
 
   @override
+  State<TodayPage> createState() => _TodayPageState();
+}
+
+class _TodayPageState extends State<TodayPage> {
+  String _message = '';
+  String? _uid;
+  DateTime _selectedDate = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _message = 'Initialization complete';
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    String uname = ap.userModel.name;
+    _uid = ap.getCurrentUserUid();
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SafeArea(
@@ -24,9 +47,9 @@ class TodayPage extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Hi, Hilal!',
-                            style: TextStyle(
+                          Text(
+                            'Hi, $uname!',
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -53,9 +76,9 @@ class TodayPage extends StatelessWidget {
                               ),
                             );
                           },
-                          child: const CircleAvatar(
+                          child: CircleAvatar(
                             backgroundImage: NetworkImage(
-                              "https://i.ibb.co/bvHR444/IMG-2925.jpg",
+                              ap.userModel.profileImage,
                             ),
                             radius: 30,
                           ),
@@ -67,9 +90,11 @@ class TodayPage extends StatelessWidget {
                     height: 25,
                   ),
                   DatePicker(
-                    DateTime.now(),
+                    _selectedDate,
                     onDateChange: (date) {
-                      // Handle date selection
+                      setState(() {
+                        _selectedDate = date;
+                      });
                     },
                     selectedTextColor: Colors.black,
                     selectionColor: Colors.orange,
@@ -120,41 +145,73 @@ class TodayPage extends StatelessWidget {
                         height: 20,
                       ),
                       Expanded(
-                        child: ListView(
-                          children: const [
-                            EventsTile(
-                              imageAsset: 'rout/images/750997891.jpg',
-                              eventName: 'Birthday Party',
-                              eventWho: 'Lua Dipa',
-                            ),
-                            EventsTile(
-                              imageAsset:
-                                  'rout/images/Prime-Minister-Narendra-Modi---PTI-_1685268448404.avif',
-                              eventName: 'Political speech',
-                              eventWho: 'Morendra Nodi',
-                            ),
-                            EventsTile(
-                              imageAsset: 'rout/images/seminar.jpg',
-                              eventName: 'Seminar',
-                              eventWho: 'Salmon Boi',
-                            ),
-                            EventsTile(
-                              imageAsset: 'rout/images/microsoft-logo.webp',
-                              eventName: 'Company meetings',
-                              eventWho: 'Microsoft',
-                            ),
-                            EventsTile(
-                              imageAsset: 'rout/images/unnamed.png',
-                              eventName: 'Company party',
-                              eventWho: 'GuluGulu',
-                            ),
-                            EventsTile(
-                              imageAsset:
-                                  'rout/images/Wedding-cost-in-India-Explained-Cover-Image.jpg',
-                              eventName: 'Wedding',
-                              eventWho: 'Unmarried Person',
-                            ),
-                          ],
+                        child:
+                            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                          stream: FirebaseFirestore.instance
+                              .collection('events')
+                              .where('id', isEqualTo: _uid)
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                  snapshot) {
+                            if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            }
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Text('Loading...');
+                            }
+
+                            final data = snapshot.requireData;
+                            final List<EventModel> eventModels = [];
+                            final List<String> documentIds = [];
+
+                            for (var docSnapshot in data.docs) {
+                              final eventModel =
+                                  EventModel.fromFirestore(docSnapshot);
+                              final documentId = docSnapshot.id;
+
+                              final Timestamp firestoreTimestamp =
+                                  docSnapshot.data()['FromTime'] as Timestamp;
+                              final DateTime eventDate =
+                                  firestoreTimestamp.toDate();
+
+                              if (_selectedDate.year == eventDate.year &&
+                                  _selectedDate.month == eventDate.month &&
+                                  _selectedDate.day == eventDate.day) {
+                                eventModels.add(eventModel);
+                                documentIds.add(documentId);
+                                print('Document ID: $documentId');
+                                print('Event Model: $eventModel');
+                                print('Date in Firestore: $firestoreTimestamp');
+                                print('Selected Date: $_selectedDate');
+                              }
+                            }
+
+                            if (eventModels.isEmpty) {
+                              return const Text(
+                                  "No events found for selected date");
+                            }
+
+                            return ListView.builder(
+                              itemCount: eventModels.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final eventModel = eventModels[index];
+                                final documentId = documentIds[index];
+                                print('Rendering Event: $documentId');
+
+                                return EventsTile(
+                                  docId: '',
+                                  imageAsset: eventModel.eventPic,
+                                  eventName: eventModel.eventName,
+                                  eventWho: eventModel.name,
+                                  onDeletePressed: () {},
+                                  onUpdatePressed: () {},
+                                  onPressed: () {},
+                                );
+                              },
+                            );
+                          },
                         ),
                       ),
                     ],

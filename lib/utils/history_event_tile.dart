@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TomEventsTile extends StatelessWidget {
+class historyEventsTile extends StatelessWidget {
   final String imageAsset;
   final String eventName;
   final String eventWho;
   final Function() onPressed;
   final void Function() onCancelPressed;
 
-  const TomEventsTile({
+  const historyEventsTile({
     super.key,
     required this.imageAsset,
     required this.eventName,
@@ -49,7 +49,7 @@ class TomEventsTile extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Container(
@@ -88,6 +88,9 @@ class TomEventsTile extends StatelessWidget {
                   },
                   onSelected: (value) {
                     if (value == 'Cancel') {
+                      onCancelPressed();
+                    }
+                    {
                       onCancelPressed();
                     }
                   },

@@ -1,84 +1,179 @@
 import 'package:everlast/pages/components/profile_menu.dart';
-import 'package:everlast/pages/components/profile_pic.dart';
+import 'package:everlast/pages/my_account.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/auth_provider.dart';
+import 'WelcomeScreen.dart';
 import 'components/menu_pages/help.dart';
-import 'components/menu_pages/notification.dart';
+import 'components/menu_pages/setting.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  void _showLogoutConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Log Out'),
+          content: const Text('Are you sure you want to log out?'),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                final ap = Provider.of<AuthProvider>(context, listen: false);
+                await ap.userSignOut();
+                // Navigator.of(context).pop();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const WelcomeScreen()),
+                    (route) => false);
+              },
+              child: const Text('Log Out'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    final String _profilePic = ap.userModel.profileImage;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.purple,
-        title: const Text(
-          'Profile',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 20),
-              Center(child: ProfilePic()),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    ProfileMenu(
-                      icon: "rout/images/user-03-svgrepo-com.svg",
-                      text: "My Account",
-                      press: () {},
-                    ),
-                    SizedBox(height: 10),
-                    ProfileMenu(
-                      icon: "rout/images/notification-svgrepo-com.svg",
-                      text: "Notifications",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => NotificationPage(),
+      body: Container(
+        padding: const EdgeInsets.only(top: 10),
+        width: double.infinity,
+        color: Colors.purple,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 14,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "User Preferences",
+                  style: TextStyle(
+                    color: Colors.white,
+                    height: 0.5,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+                child: Container(
+                  color: Color.fromARGB(255, 226, 225, 226),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        InkWell(
+                          child: Container(
+                            child: _profilePic == null
+                                ? const CircleAvatar(
+                                    backgroundColor: Colors.purple,
+                                    radius: 50,
+                                    child: Icon(
+                                      Icons.account_circle,
+                                      size: 50,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : CircleAvatar(
+                                    backgroundImage: NetworkImage(_profilePic),
+                                    radius: 50,
+                                  ),
                           ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    ProfileMenu(
-                      icon: "rout/images/settings-svgrepo-com.svg",
-                      text: "Settings",
-                      press: () {},
-                    ),
-                    SizedBox(height: 10),
-                    ProfileMenu(
-                      icon: "rout/images/help-svgrepo-com.svg",
-                      text: "Help",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HelpPage(),
+                        ),
+                        //Account Setting
+                        const SizedBox(height: 15),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            children: [
+                              ProfileMenu(
+                                icon: "rout/images/user-03-svgrepo-com.svg",
+                                text: "My Account",
+                                press: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MyAccountPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              //App Setting
+                              SizedBox(height: 10),
+                              ProfileMenu(
+                                  icon: "rout/images/settings-svgrepo-com.svg",
+                                  text: "Settings",
+                                  press: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => settingPage(),
+                                      ),
+                                    );
+                                  }),
+                              //Help
+                              SizedBox(height: 10),
+                              ProfileMenu(
+                                icon: "rout/images/help-svgrepo-com.svg",
+                                text: "Help",
+                                press: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HelpPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              //LogOut
+                              SizedBox(height: 10),
+                              ProfileMenu(
+                                icon: "rout/images/log-out-svgrepo-com.svg",
+                                text: "Log Out",
+                                press: () {
+                                  _showLogoutConfirmationDialog(context);
+                                },
+                              ),
+                            ],
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 10),
-                    ProfileMenu(
-                      icon: "rout/images/log-out-svgrepo-com.svg",
-                      text: "Log Out",
-                      press: () {},
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
