@@ -7,6 +7,7 @@ import 'package:everlast/model/user_model.dart';
 import 'package:everlast/pages/otp_page.dart';
 import 'package:everlast/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,7 +40,7 @@ class AuthProvider extends ChangeNotifier {
     return user?.uid;
   }
 
-   User? getCurrentUser() {
+  User? getCurrentUser() {
     return FirebaseAuth.instance.currentUser;
   }
 
@@ -62,45 +63,49 @@ class AuthProvider extends ChangeNotifier {
     String phoneNumber,
     Function() onCompleted,
   ) async {
-  _isLoading = true; // Set isLoading to true before starting the verification process
-  notifyListeners(); // Notify listeners to update the UI
-
-  try {
-    await _firebaseAuth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
-        await _firebaseAuth.signInWithCredential(phoneAuthCredential);
-        _isLoading = false; // Set isLoading to false after successful verification
-        notifyListeners(); // Notify listeners to update the UI
-      },
-      verificationFailed: (error) {
-        _isLoading = false; // Set isLoading to false in case of verification failure
-        notifyListeners(); // Notify listeners to update the UI
-        throw Exception(error.message);
-      },
-      codeSent: (verificationId, forceResendingToken) {
-        _isLoading = false; // Set isLoading to false when code is sent (UI transition)
-        notifyListeners(); // Notify listeners to update the UI
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OtpPage(
-              verificationId: verificationId,
-            ),
-          ),
-        );
-      },
-      codeAutoRetrievalTimeout: (verificationId) {},
-    );
-  } on FirebaseAuthException catch (e) {
-    _isLoading = false; // Set isLoading to false in case of authentication exception
+    _isLoading =
+        true; // Set isLoading to true before starting the verification process
     notifyListeners(); // Notify listeners to update the UI
-    showSnackBar(context, e.message.toString());
-    onCompleted();
-  }
-}
 
+    try {
+      await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
+          await _firebaseAuth.signInWithCredential(phoneAuthCredential);
+          _isLoading =
+              false; // Set isLoading to false after successful verification
+          notifyListeners(); // Notify listeners to update the UI
+        },
+        verificationFailed: (error) {
+          _isLoading =
+              false; // Set isLoading to false in case of verification failure
+          notifyListeners(); // Notify listeners to update the UI
+          throw Exception(error.message);
+        },
+        codeSent: (verificationId, forceResendingToken) {
+          _isLoading =
+              false; // Set isLoading to false when code is sent (UI transition)
+          notifyListeners(); // Notify listeners to update the UI
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OtpPage(
+                verificationId: verificationId,
+              ),
+            ),
+          );
+        },
+        codeAutoRetrievalTimeout: (verificationId) {},
+      );
+    } on FirebaseAuthException catch (e) {
+      _isLoading =
+          false; // Set isLoading to false in case of authentication exception
+      notifyListeners(); // Notify listeners to update the UI
+      showSnackBar(context, e.message.toString());
+      onCompleted();
+    }
+  }
 
   //verify otp
   void verifyOtp({
@@ -141,6 +146,35 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  Future<String?> getEventPicURL(String eventId) async {
+    try {
+      await Firebase
+          .initializeApp(); // Initialize Firebase if you haven't already
+
+      final CollectionReference eventsCollection =
+          FirebaseFirestore.instance.collection('events');
+      final DocumentSnapshot eventDocument =
+          await eventsCollection.doc(eventId).get();
+
+      if (eventDocument.exists) {
+        final Map<String, dynamic>? data =
+            eventDocument.data() as Map<String, dynamic>?;
+        if (data != null) {
+          final String? eventPicURL = data['EventPic'] as String?;
+          print(eventPicURL);
+          return eventPicURL;
+        } else {
+          return null; // Handle the case where data is null or not a Map
+        }
+      } else {
+        return null; // Event document doesn't exist
+      }
+    } catch (e) {
+      print("Error fetching eventpic URL: $e");
+      return null; // An error occurred
+    }
+  }
+
   Future<void> saveUserDataToFirebase({
     required BuildContext context,
     required UserModel userModel,
@@ -151,7 +185,8 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     try {
       if (profilePic != null) {
-        userModel.profileImage = await storeFileToStorage("profilePic/$_uid", profilePic);
+        userModel.profileImage =
+            await storeFileToStorage("profilePic/$_uid", profilePic);
       }
       userModel.createdAt = DateTime.now().millisecondsSinceEpoch.toString();
       userModel.phone = _firebaseAuth.currentUser!.phoneNumber!;
@@ -196,7 +231,7 @@ class AuthProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-          _userModel = UserModel(
+        _userModel = UserModel(
           name: snapshot['name'],
           email: snapshot['email'],
           profileImage: snapshot['profileImage'],
@@ -247,10 +282,10 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      if(!context.mounted) {
+      if (!context.mounted) {
         return;
       }
-      
+
       final id = documentId ?? _firebaseFirestore.collection("events").doc().id;
 
       await storeFileToStorage("eventPic/$_uid", eventPic).then((value) {
@@ -274,63 +309,6 @@ class AuthProvider extends ChangeNotifier {
       });
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message.toString());
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
-// Update event data in Firestore
-  Future<void> updateEventDataInFirestore({
-    required String documentId,
-    required BuildContext context,
-    required EventModel updatedEventModel,
-    required File eventPic,
-    required Function onSuccess,
-  }) async {
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      String? uid = getCurrentUserUid();
-      if (uid == null) {
-        // User is not authenticated
-        // Handle the case where the user is not authenticated or take appropriate action
-        showSnackBar(context, 'User is not authenticated');
-        _isLoading = false;
-        notifyListeners();
-        return;
-      }
-
-      String value = await storeFileToStorage("eventPic/$uid", eventPic);
-      // updatedEventModel.id = uid;
-      updatedEventModel.eventPic = value;
-      updatedEventModel.createdAt =
-          DateTime.now().millisecondsSinceEpoch.toString();
-
-      _eventModel =
-          updatedEventModel; // Assign updatedEventModel to _eventModel
-
-      print(updatedEventModel.id);
-      DocumentReference eventRef =
-          _firebaseFirestore.collection("events").doc(documentId);
-
-      // Check if the document exists
-      DocumentSnapshot eventSnapshot = await eventRef.get();
-
-      if (eventSnapshot.exists) {
-        // Document exists, update the data
-        print('document exists');
-        await eventRef.update(updatedEventModel.toMap());
-      } else {
-        // Document doesn't exist, create a new document
-        await eventRef.set(updatedEventModel.toMap());
-      }
-
-      onSuccess();
-      _isLoading = false;
-      notifyListeners();
-    } catch (e) {
-      showSnackBar(context, e.toString());
       _isLoading = false;
       notifyListeners();
     }

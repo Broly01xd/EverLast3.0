@@ -2,13 +2,14 @@ import 'package:everlast/arguments/card_page_arguments.dart';
 import 'package:everlast/pages/otp_page.dart';
 import 'package:everlast/wrapper.dart';
 import 'package:flutter/material.dart';
+
 import '../pages/WelcomeScreen.dart';
-import '../pages/my_account.dart';
 import '../pages/bottom_nav_pages.dart';
 import '../pages/card.dart';
 import '../pages/create_event.dart';
 import '../pages/error_page.dart';
 import '../pages/gen_OTP.dart';
+import '../pages/my_account.dart';
 import '../pages/user_details.dart';
 
 class MyRoutes {
@@ -79,7 +80,7 @@ class MyRoutes {
                     argument: args as CardPageArgument,
                   ));
         }
-        return MaterialPageRoute(builder: (context) => const CreateEvent());
+        return MaterialPageRoute(builder: (context) => CreateEvent());
       case '/MyAccountPage':
         return MaterialPageRoute(builder: (context) => MyAccountPage());
       case '/OtpPage':

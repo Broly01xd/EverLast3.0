@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everlast/arguments/card_page_arguments.dart';
 import 'package:everlast/model/event_model.dart';
@@ -9,13 +10,14 @@ import 'package:everlast/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
 import '../utils/api/notification_api.dart';
 import '../utils/utils.dart';
 
 class CreateEvent extends StatefulWidget {
   final CardPageArgument? argument;
 
-  const CreateEvent({super.key, this.argument});
+  CreateEvent({super.key, this.argument});
   @override
   _CreateEventState createState() => _CreateEventState();
 }
@@ -37,6 +39,7 @@ class _CreateEventState extends State<CreateEvent> {
   final datePickerController = TextEditingController();
   final fromTimeController = TextEditingController();
   final toTimeController = TextEditingController();
+
   void setReminder(int id, int minutesBefore) async {
     DateTime scheduledTime =
         DateTime.now().add(Duration(minutes: -minutesBefore));
@@ -46,9 +49,6 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   String? _imagePath;
-
-
-
 
   Future<void> _openImagePicker() async {
     final pickedImage = await picker.getImage(source: ImageSource.gallery);
@@ -60,10 +60,6 @@ class _CreateEventState extends State<CreateEvent> {
       });
     }
   }
-
-
-
-
 
   MyTime? selectedReminderOption;
 
@@ -109,11 +105,11 @@ class _CreateEventState extends State<CreateEvent> {
       addressController.text = widget.argument!.eventModel.address;
       locationController.text = widget.argument!.eventModel.location;
     }
-    
+
     super.initState();
   }
 
-   Future<void> _updateImagePicker() async {
+  Future<void> _updateImagePicker() async {
     final pickedImage = await picker.getImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
@@ -127,7 +123,7 @@ class _CreateEventState extends State<CreateEvent> {
   @override
   Widget build(BuildContext context) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
-
+    // String? eventId = ap.currentEventId;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -303,7 +299,8 @@ class _CreateEventState extends State<CreateEvent> {
                               TextFormField(
                                 decoration: InputDecoration(
                                   labelText: "Location:",
-                                  hintText: "Copy address link from google maps here (optional)",
+                                  hintText:
+                                      "Copy address link from google maps here (optional)",
                                 ),
                                 controller: locationController,
                                 // validator: (value) {
@@ -320,9 +317,7 @@ class _CreateEventState extends State<CreateEvent> {
                                       0.05),
                               Row(
                                 children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
+                                  const SizedBox(height: 10),
                                   if (_pickedImagePath != null) ...[
                                     const SizedBox(height: 15, width: 69),
                                     Image.file(
@@ -333,14 +328,37 @@ class _CreateEventState extends State<CreateEvent> {
                                           MediaQuery.of(context).size.height /
                                               2,
                                     ),
-                                  ],
+                                  ] else
+                                    FutureBuilder<String?>(
+                                      future: ap.getEventPicURL(
+                                          'wbBsSgQRcqup6vK92sOM'), // Replace eventId with the actual event ID
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<String?> snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return CircularProgressIndicator(); // Loading indicator
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error: ${snapshot.error}');
+                                        } else if (!snapshot.hasData) {
+                                          return Text('No image URL available');
+                                        } else {
+                                          return Image.network(
+                                            snapshot.data!,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                2,
+                                          );
+                                        }
+                                      },
+                                    ),
                                 ],
                               ),
-
-
-
-
-
                               Container(
                                 alignment: Alignment.center,
                                 child: ElevatedButton.icon(
@@ -351,10 +369,6 @@ class _CreateEventState extends State<CreateEvent> {
                                   label: const Text('Upload Image'),
                                 ),
                               ),
-
-
-
-
                               Container(
                                 alignment: Alignment.center,
                                 child: Container(
@@ -362,7 +376,6 @@ class _CreateEventState extends State<CreateEvent> {
                                   child: _isSubmitting
                                       ? CircularProgressIndicator(
                                           color: Colors.purple,
-                                          
                                         )
                                       : ElevatedButton(
                                           onPressed: () async {
@@ -446,7 +459,7 @@ class _CreateEventState extends State<CreateEvent> {
                                                         'Personally arranged event notification');
 
                                             storeEventDataToFireStore();
-                                            
+
                                             setState(() {
                                               _isSubmitting = false;
                                             });
@@ -506,10 +519,6 @@ class _CreateEventState extends State<CreateEvent> {
       fromTime = date;
     });
   }
-
-  
-
-
 
   Future pickToDateTime({
     required bool pickDate,
